@@ -1,0 +1,9 @@
+/* pages/home/home.wxss */
+.server {
+  margin-top: 16rpx;
+  padding: 20rpx;
+}
+
+.server .server-icons {
+  margin-top: 26rpx;
+}

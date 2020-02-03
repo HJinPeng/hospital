@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "h-swiper": "/components/h-swiper/h-swiper",
+    "h-title": "/components/h-title/h-title",
+    "h-icons": "/components/h-icons/h-icons"
+  },
+  "navigationBarTitleText": "就医助手"
+}

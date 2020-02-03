@@ -1,0 +1,8 @@
+<!--pages/home/home.wxml-->
+<!-- 1. 轮播图 -->
+<h-swiper lists="{{banners}}"/>
+<!-- 2. 服务引导 -->
+<view class="server">
+  <h-title title="服务引导"/>
+  <h-icons out-h-icons="server-icons" lists="{{entry}}"/>
+</view>

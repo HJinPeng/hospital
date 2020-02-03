@@ -1,0 +1,15 @@
+/* components/h-title/h-title.wxss */
+.title {
+  height: 40rpx;
+}
+
+.title .content {
+  border-left: 5px solid #1296db;
+}
+
+.title .content .text {
+  font-size: 28rpx;
+  font-weight: 700;
+  line-height: 40rpx;
+  padding-left: 14rpx;
+}

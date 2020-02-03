@@ -1,0 +1,13 @@
+<!--components/h-icons/h-icons.wxml-->
+<view class="out-h-icons">
+  <h-border>
+    <view class="content">
+      <block wx:for="{{lists}}" wx:key="index">
+        <view class="item">
+          <image class="image" src="{{item.image}}" mode="widthFix"></image>
+          <view class="name">{{item.name}}</view>
+        </view>
+      </block>
+    </view>
+  </h-border>
+</view>

@@ -1,0 +1,8 @@
+/* components/h-border/h-border.wxss */
+.border {
+  width: 100%;
+  padding: 14rpx;
+  border: 1px solid #1296db;
+  border-radius: 10px;
+  box-shadow: 0 1px 5px #1296db;
+}

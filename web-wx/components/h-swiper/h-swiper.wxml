@@ -1,0 +1,9 @@
+<!--components/h-swiper/h-swiper.wxml-->
+<swiper class="swiper" indicator-dots indicator-color="#999" indicator-active-color="#1296db"
+  autoplay interval="3000" duration="500">
+  <block wx:for="{{lists}}" wx:key="index">
+    <swiper-item class="swiper-item">
+      <image src="{{item.image}}" mode="widthFix" class="image"/>
+    </swiper-item>
+  </block>
+</swiper>

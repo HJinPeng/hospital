@@ -1,0 +1,4 @@
+<!--components/h-border/h-border.wxml-->
+<view class="border">
+  <slot/>
+</view>

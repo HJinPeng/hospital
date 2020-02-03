@@ -1,0 +1,6 @@
+<!--components/h-title/h-title.wxml-->
+<view class="title">
+  <view class="content">
+    <text class="text">{{title}}</text>
+  </view>
+</view>
