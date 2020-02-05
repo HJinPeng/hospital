@@ -1,0 +1,10 @@
+/* pages/reserve/childCpns/h-date/h-date.wxss */
+.time {
+  margin-top: 36rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  /* justify-content: space-around; */
+}

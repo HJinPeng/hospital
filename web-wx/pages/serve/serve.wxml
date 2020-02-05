@@ -1,2 +1,31 @@
 <!--pages/serve/serve.wxml-->
-<text>pages/serve/serve.wxml</text>
+<!-- 1. 搜索 -->
+<van-search
+  label="北京"
+  value="{{ value }}"
+  placeholder="请输入搜索关键词"
+  use-action-slot
+  bind:change="onChange"
+  bind:search="onSearch"
+>
+  <view slot="action" bind:tap="onClick">搜索</view>
+</van-search>
+
+<!-- 2. 热门诊所 -->
+<view class="hot">
+  <h-title title="热门诊所"/>
+  <h-hot lists="{{hotHospital}}"/>
+</view>
+
+<!-- 3. 快速寻诊 -->
+<view class="quick">
+  <h-title title="快速寻诊"/>
+  <h-quick lists="{{quick}}"/>
+</view>
+
+<!-- 4. 名医点睛 -->
+<view class="doctor">
+  <h-title title="名医点睛"/>
+  <h-icons out-h-icons="doctor-icons" lists="{{doctor}}"/>
+</view>
+

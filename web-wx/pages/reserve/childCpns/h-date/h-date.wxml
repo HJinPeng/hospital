@@ -1,0 +1,8 @@
+<!--pages/reserve/childCpns/h-date/h-date.wxml-->
+<h-title title="可预约时间段"/>
+<view class="time">
+  <block wx:for="{{lists}}" wx:key="index">
+    <van-button size="small"  custom-style="font-size:24rpx;margin-bottom: 20rpx;" type="default">{{item.time}} 剩 {{item.number}}</van-button>
+  </block>
+</view>
+<van-button custom-style="margin-top: 20rpx" size="large" type="info" color="linear-gradient(to right, #4bb0ff, #6149f6)">去挂号</van-button>

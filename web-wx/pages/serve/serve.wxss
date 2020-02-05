@@ -1,1 +1,9 @@
 /* pages/serve/serve.wxss */
+.hot,.doctor,.quick {
+  margin-top: 16rpx;
+  padding: 20rpx;
+}
+
+.doctor .doctor-icons {
+  margin-top: 26rpx;
+}

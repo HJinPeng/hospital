@@ -1,0 +1,23 @@
+<!--pages/serve/childCpns/h-hot/h-hot.wxml-->
+<view class="out-h-hot">
+  <block wx:for="{{lists}}" wx:key="index">
+    <view class="item">
+      <h-border>
+        <view class="content">
+          <view class="left">
+            <image class="image" src="{{item.image}}" mode="widthFix"/>
+          </view>
+          <view class="right">
+            <view class="name">{{item.name}}</view>
+            <view class="tag">
+              <block wx:for="{{item.tag}}" wx:key="index">
+                <text class="tag-item">{{item}}</text>
+              </block>
+            </view>
+            <van-rate size="{{ 13 }}" value="{{ item.score }}"/>
+          </view>
+        </view>
+      </h-border>
+    </view>
+  </block>
+</view>

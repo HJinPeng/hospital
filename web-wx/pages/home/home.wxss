@@ -1,5 +1,5 @@
 /* pages/home/home.wxss */
-.server {
+.server,.article {
   margin-top: 16rpx;
   padding: 20rpx;
 }

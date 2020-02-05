@@ -1,4 +1,13 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "van-search": "@vant/weapp/search/index",
+
+    "h-title": "/components/h-title/h-title",
+    "h-icons": "/components/h-icons/h-icons",
+
+    "h-hot": "./childCpns/h-hot/h-hot",
+    "h-quick": "./childCpns/h-quick/h-quick"
+   
+  },
   "navigationBarTitleText": "就诊中心"
 }

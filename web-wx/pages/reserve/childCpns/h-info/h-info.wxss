@@ -1,0 +1,53 @@
+/* pages/reserve/childCpns/h-info/h-info.wxss */
+.info {
+  padding: 20rpx 40rpx;
+}
+
+.info .top {
+  display: flex;
+}
+
+.info .top .left {
+  width: 30%;
+  padding: 40rpx;
+}
+
+.info .top .left .image {
+  width: 100%;
+  border: 1px solid #1296db;
+  border-radius: 50%;
+}
+
+.info .top .right {
+  width: 70%;
+  margin-top: 50rpx;
+}
+
+.info .top .right .name{
+  color: #1296db;
+  font-size: 30rpx;
+  font-weight: 700;
+  margin-bottom: 6rpx;
+}
+
+.info .top .right .skill {
+  font-size: 28rpx;
+}
+
+.info .bottom {
+  display: flex;
+  color: #666;
+  font-size: 26rpx;
+}
+
+.info .bottom .rate,
+.info .bottom .number {
+  width: 50%;
+  text-align: center;
+}
+
+.info .bottom .number .text {
+  color: #000;
+  font-size: 28rpx;
+  padding-left: 10rpx;
+}

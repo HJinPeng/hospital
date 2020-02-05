@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "h-border": "/components/h-border/h-border"
+  }
+}

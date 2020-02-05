@@ -1,0 +1,43 @@
+/* pages/home/childCpns/h-article/h-article.wxss */
+.item {
+  margin-top: 30rpx;
+}
+
+.content {
+  display: flex;
+}
+
+.content .left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 65%;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+  font-size: 28rpx;
+  line-height: 46rpx;
+}
+
+.content .left .title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.content .left .time {
+  font-size: 24rpx;
+  color: #606060;
+  padding-top: 4rpx;
+}
+
+.content .right {
+  width: 35%;
+}
+
+.content .right .image {
+  width: 100%;
+  border-radius: 6px;
+}
+

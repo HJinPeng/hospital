@@ -1,0 +1,26 @@
+<!--pages/hospital/hospital.wxml-->
+<!-- 1. 诊所图片 -->
+<view class="picture">
+  <image class="image" src="{{picture}}" mode="top"/>
+</view>
+
+<!-- 2. 诊所简介 -->
+<view class="intro">
+  <h-title title="诊所简介"/>
+  <view class="text">{{intro}}</view>
+</view>
+
+<!-- 3.寻医挂号 -->
+<view class="doctor">
+  <h-title title="寻医挂号"/>
+  <h-icons out-h-icons="doctor-icons" lists="{{doctor}}"/>
+</view>
+
+<!-- 4. 联系方式 -->
+<view class="link">
+  <h-title title="联系方式"/>
+  <view class="text">
+    <view>地址：{{link.address}}</view>
+    <view>电话：{{link.phone}}</view>
+  </view>
+</view>

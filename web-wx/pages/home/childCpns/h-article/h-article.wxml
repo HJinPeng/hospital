@@ -1,0 +1,18 @@
+<!--pages/home/childCpns/h-article/h-article.wxml-->
+<view class="out-h-article">
+  <block wx:for="{{lists}}" wx:key="index">
+    <view class="item">
+      <h-border>
+        <view class="content">
+          <view class="left">
+            <view class="title">{{item.title}}</view>
+            <text class="time">{{item.time}}</text> 
+          </view>
+          <view class="right">
+            <image class="image" src="{{item.image}}" mode="widthFix"/>
+          </view>
+        </view>
+      </h-border>
+    </view>
+  </block>
+</view>

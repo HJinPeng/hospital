@@ -11,6 +11,11 @@ Page({
       {name:"挂号记录",image:"/assets/home/jilu.png"},
       {name:"我的病历",image:"/assets/home/bingli.png"},
       {name:"我的收藏",image:"/assets/home/shoucang.png"},
+    ],
+    articles: [
+      {title:"国务院：各级政府不得以任何名义截留、调用重点医疗应急防控物资物资物资物资",time:"2/2 18:21",image:"https://img1.gtimg.com/ninja/2/2020/02/ninja158054468035819.jpg",link:"https://www.baidu.com"},
+      {title:"国务院：各级政府不得以任何名义截留、调用重点医疗应急防控物资",time:"2/2 18:21",image:"https://img1.gtimg.com/ninja/2/2020/02/ninja158054468035819.jpg",link:"https://www.baidu.com"},
+      {title:"国务院：各级政府不得以任何名义截留、调用重点医疗应急防控物资",time:"2/2 18:21",image:"https://img1.gtimg.com/ninja/2/2020/02/ninja158054468035819.jpg",link:"https://www.baidu.com"}
     ]
   },
   onLoad: function (options) {

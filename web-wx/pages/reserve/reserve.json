@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "h-info": "./childCpns/h-info/h-info",
+    "h-date": "./childCpns/h-date/h-date"
+  }
+}

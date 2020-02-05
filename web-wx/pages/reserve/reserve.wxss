@@ -1,0 +1,5 @@
+/* pages/reserve/reserve.wxss */
+.time {
+  margin-top: 16rpx;
+  padding: 20rpx;
+}

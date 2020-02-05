@@ -6,3 +6,8 @@
   <h-title title="服务引导"/>
   <h-icons out-h-icons="server-icons" lists="{{entry}}"/>
 </view>
+<!-- 3. 热点资讯 -->
+<view class="article">
+  <h-title title="热点资讯"/>
+  <h-article lists="{{articles}}"/>
+</view>

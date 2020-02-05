@@ -2,7 +2,10 @@
   "usingComponents": {
     "h-swiper": "/components/h-swiper/h-swiper",
     "h-title": "/components/h-title/h-title",
-    "h-icons": "/components/h-icons/h-icons"
+    "h-icons": "/components/h-icons/h-icons",
+
+
+    "h-article": "./childCpns/h-article/h-article"
   },
   "navigationBarTitleText": "就医助手"
 }

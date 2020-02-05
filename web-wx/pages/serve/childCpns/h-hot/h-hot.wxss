@@ -1,0 +1,59 @@
+/* pages/serve/childCpns/h-hot/h-hot.wxss */
+/* pages/home/childCpns/h-article/h-article.wxss */
+.item {
+  margin-top: 30rpx;
+}
+
+.content {
+  display: flex;
+}
+
+
+.content .left {
+  width: 30%;
+  padding: 2rpx 10rpx 0 10rpx;
+}
+
+.content .left .image {
+  width: 100%;
+  border-radius: 6px;
+}
+
+
+.content .right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 70%;
+  padding-left: 20rpx;
+  padding-right: 10rpx;
+  font-size: 28rpx;
+  line-height: 46rpx;
+}
+
+.content .right .name {
+  font-weight: 700;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.content .right .tag {
+  display: flex;
+  color: #1296db;
+  font-size: 24rpx;
+  font-weight: 700;
+}
+
+.content .right .tag .tag-item {
+  border: 1px solid #1296db;
+  padding-left: 8rpx;
+  padding-right: 8rpx;
+  /* height: 40rpx; */
+  line-height: 34rpx;
+  margin-right: 16rpx;
+}
+
+
+
+

@@ -1,0 +1,7 @@
+<!--pages/reserve/reserve.wxml-->
+<!-- 1. info -->
+<h-info info="{{info}}"/>
+<!-- 2. 预约时间段 -->
+<view class="time">
+  <h-date lists="{{date}}"/>
+</view>

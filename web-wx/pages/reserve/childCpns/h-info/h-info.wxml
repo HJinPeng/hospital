@@ -1,0 +1,20 @@
+<!--pages/reserve/childCpns/h-info/h-info.wxml-->
+<view class="info">
+  <view class="top">
+    <view class="left">
+      <image class="image" src="{{info.image}}" mode="widthFix"/>
+    </view>
+    <view class="right">
+      <view class="name">{{info.name}}</view>
+      <view class="skill">{{info.skill}}</view>
+    </view>
+  </view>
+  <view class="bottom">
+    <view class="rate">
+      评分 <van-rate size="{{14}}" value="{{ info.rate }}"/>
+    </view>
+    <view class="number">
+      治疗人数 <text class="text">{{info.number}}</text>
+    </view>
+  </view>
+</view>

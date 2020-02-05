@@ -1,0 +1,21 @@
+<!--pages/serve/childCpns/h-quick/h-quick.wxml-->
+<view class="out-h-quick">
+  <view class="contain">
+    <block wx:for="{{lists}}" wx:key="index">
+      <view class="card">
+        <h-border>
+          <view class="main">
+            <view class="left">
+              <image class="image" src="{{item.image}}" mode="widthFix"/>
+              <view class="name">{{item.name}}</view>
+            </view>
+            <view class="right">
+              <view class="symptom">{{item.symptom}}</view>
+              <view class="tip">{{item.tip}}</view>
+            </view>
+          </view>
+        </h-border>
+      </view>
+    </block>
+  </view>
+</view>

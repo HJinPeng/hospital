@@ -1,0 +1,49 @@
+/* pages/serve/childCpns/h-quick/h-quick.wxss */
+.contain {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card {
+  width: 49%;
+  margin-top: 30rpx;
+}
+
+.card .main {
+  display: flex;
+}
+
+.card .main .left {
+  width: 40%;
+  text-align: center;
+  font-size: 26rpx;
+  padding: 10rpx;
+}
+
+.card .main .left .image {
+  width: 100%;
+  border-radius: 50%;
+}
+
+.card .main .right {
+  width: 60%;
+  padding-left: 10rpx;
+  font-size: 22rpx;
+  color: #606060;
+}
+
+.card .main .right .symptom,
+.card .main .right .tip {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.card .main .right .tip {
+  margin-top: 6rpx;
+  -webkit-line-clamp: 2;
+}
+
