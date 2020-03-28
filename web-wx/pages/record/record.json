@@ -1,4 +1,11 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "van-tab": "@vant/weapp/tab/index",
+    "van-tabs": "@vant/weapp/tabs/index",
+
+    "h-title": "/components/h-title/h-title",
+
+    "h-card": "./childCpns/h-card/h-card"
+  },
   "navigationBarTitleText": "记录中心"
 }

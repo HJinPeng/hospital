@@ -1,2 +1,23 @@
 <!--pages/profile/profile.wxml-->
-<text>pages/profile/profile.wxml</text>
+<view class="info">
+  <view class="left">
+    <image class="image" src="/assets/common/tx.jpg" mode="widthFix"/>
+  </view>
+  <view class="center">
+    <view class="name">手机注册用户</view>
+    <view class="line"></view>
+    <view class="phone">131****2767</view>
+  </view>
+  <view class="right">
+    >
+  </view>
+</view>
+
+<h-operate out-h-operate="h-operate"/>
+
+<h-setting out-h-setting="h-setting"/>
+
+<view class="link">
+  <text>联系客服</text>
+  <text class="phone">742463015</text>
+</view>

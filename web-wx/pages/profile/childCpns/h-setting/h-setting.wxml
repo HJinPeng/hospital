@@ -1,0 +1,19 @@
+<!--pages/profile/childCpns/h-setting/h-setting.wxml-->
+<view class="out-h-setting">
+  <van-cell
+    icon="exchange" 
+    color="#1296db"
+    is-link
+    title="修改密码"
+    link-type="navigateTo"
+    url="/pages/record/record"
+  />
+  <van-cell
+    color="#1296db"
+    icon="flower-o" 
+    is-link
+    title="意见反馈"
+    link-type="navigateTo"
+    url="/pages/record/record"
+  />
+</view>

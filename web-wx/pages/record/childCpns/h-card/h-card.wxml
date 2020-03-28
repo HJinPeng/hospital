@@ -1,0 +1,34 @@
+<!--pages/record/childCpns/h-card/h-card.wxml-->
+<view class="out-h-card">
+  <block wx:for="{{lists.data}}"  wx:key="index">
+    <view class="card" bindtap="cardClick" data-url="{{item.url}}">
+      <h-border>
+        <view class="content">
+          <view class="title">
+            <view class="left">
+              <van-icon name="{{item.icon}}" color="#1296db" size="50rpx"/>
+              <text class="name">{{item.name}}</text>
+            </view>
+            <view class="right">
+              {{item.title_right}}
+            </view>
+          </view>
+          <view class="info">
+            <view class="one">
+              <view class="left">
+                {{item.one_left}}
+              </view>
+              <view class="right"  style="color: {{lists.color}}">
+                {{item.one_right}}
+              </view>
+            </view>
+            <view class="two">
+              {{item.two}}
+            </view>
+          </view>
+        </view>
+      </h-border>
+    </view>
+
+  </block>
+</view>

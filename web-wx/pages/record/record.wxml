@@ -1,2 +1,23 @@
 <!--pages/record/record.wxml-->
-<text>pages/record/record.wxml</text>
+<!-- <view class="order"> -->
+  <!-- <h-title title="挂号记录"/> -->
+  <van-tabs swipeable animated type="card" nav-class="tabs" color="#1296db">
+    <van-tab title="未支付">
+      <h-card lists="{{nopay}}" out-h-card="tab-card"/>
+    </van-tab>
+    <van-tab title="待就诊">
+      <h-card lists="{{wait}}" out-h-card="tab-card"/>
+    </van-tab>
+    <van-tab title="已就诊">
+      <h-card lists="{{finish}}" out-h-card="tab-card"/>
+    </van-tab>
+    <van-tab title="已过期">
+      <h-card lists="{{past}}" out-h-card="tab-card"/>
+    </van-tab>
+  </van-tabs>
+<!-- </view> -->
+
+<view class="history">
+  <h-title title="我的病历"/>
+  <h-card lists="{{history}}" out-h-card="history-card"/>
+</view>

@@ -1,0 +1,16 @@
+<!--pages/history/history.wxml-->
+<!--pages/order/order.wxml-->
+<view class="histroy">
+  <block wx:for="{{lists}}" wx:key="index">
+    <van-cell-group>
+      <van-field
+        type="textarea"
+        autosize
+        value="{{item.value}}"
+        label="{{item.label}}"
+        disabled
+        border="{{ false }}"
+      />
+    </van-cell-group>
+  </block>
+</view>

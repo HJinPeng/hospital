@@ -1,0 +1,11 @@
+/* pages/order/order.wxss */
+.order {
+  margin-top: 1px;
+  background-color: #fff;
+  padding-bottom: 30rpx;
+}
+
+.button {
+  margin-top: 30rpx;
+  text-align: center;
+}

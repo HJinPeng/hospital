@@ -5,4 +5,5 @@
   border: 1px solid #1296db;
   border-radius: 10px;
   box-shadow: 0 1px 5px #1296db;
+  background-color: #fff;
 }

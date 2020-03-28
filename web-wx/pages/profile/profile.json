@@ -1,4 +1,10 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "van-divider": "@vant/weapp/divider/index",
+    "van-icon": "@vant/weapp/icon/index",
+
+    "h-operate": "./childCpns/h-operate/h-operate",
+    "h-setting": "./childCpns/h-setting/h-setting"
+  },
   "navigationBarTitleText": "个人中心"
 }

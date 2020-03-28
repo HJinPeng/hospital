@@ -6,8 +6,9 @@
     "pages/profile/profile",
     "pages/address/address",
     "pages/hospital/hospital",
-    "pages/reserve/reserve"
-
+    "pages/reserve/reserve",
+    "pages/order/order",
+    "pages/history/history"
   ],
   "usingComponents": {
     "van-button": "@vant/weapp/button/index"
