@@ -1,374 +1,316 @@
 <template>
-	<div class="app_first">
-		<!-- 过滤栏 组件-->
-		<div>
-		    <!-- 本周(按钮) -->	    
-	  		<div class="block">
-		  		  <button class="el-icon-arrow-left btn" @click="getPrevWeek"></button>
-		  		  <span class="week" v-text="weekText" v-model="weekText"></span>
-		  		  <button class="el-icon-arrow-right btn" @click="getNextWeek"></button>
-	  		</div>
-
-	  		<!-- 日期 -->
-	  		<div class="block">
-	  		      <el-date-picker v-model="todayTime_value" type="date" placeholder="选择日期" :picker-options="pickerOptions0"></el-date-picker>
-	  		</div>
-
-			<!-- 科室 -->
-			<div class="block block_small">
-	  		    <el-select v-model="office_value" placeholder="所有科室">
-		  		      <el-option v-for="item in office_options" :key="item.office_value" :label="item.office_label" :value="item.office_value">
-		  		      </el-option>
-	  		  	</el-select>
-	  		</div>
-	  		  
-	  	    <!-- 类型 -->
-	  	    <div class="block block_small">
-	  		    <el-select v-model="type_value" placeholder="所有类型">
-		  		      <el-option v-for="item in type_options" :key="item.type_value" :label="item.type_label" :value="item.type_value">
-		  		      </el-option>
-	  		  </el-select>
-	  		</div>
-	  		  
-	  	    <!-- 所有人 -->
-	  	    <div class="block block_small">
-	  		    <el-select v-model="doctor_value" placeholder="所有人">
-		  		      <el-option v-for="item in doctor_options" :key="item.doctor_value" :label="item.doctor_label" :value="item.doctor_value">
-		  		      </el-option>
-	  		  </el-select>
-	  		</div> 	
-
-	  		<!-- 复选框(只看我的排班)-->
-	  		<div class="block block1">
-	  			<el-checkbox v-model="checked">只看我的排班</el-checkbox>
-	  		</div> 
+	<div class="arrange">
+		<div class="operate">
+			<div class="choose_doctor">
+				<!-- 所有人 -->
+				<label>查看排班：</label>
+				<el-select v-model="doctor_id" placeholder="所有医生">
+					<el-option key="all" label="全部医生" value="all">
+					</el-option>
+					<el-option v-for="item of doctor_options" :key="item._id" :label="item.name" :value="item._id">
+					</el-option>
+				</el-select>
+			</div>
+			<div class="btns">
+				<label>选择日期进行操作：</label>
+				<el-button type="primary" @click="openDialogAddArrange">新增排班</el-button>
+				<el-button type="warning">编辑排班</el-button>
+				<el-button type="danger">删除排班</el-button>
+			</div>
 		</div>
-  		<!-- 表单 组件-->
-  		<div class="table1">
-  			<table border="1" cellspacing="0">
-					<tr>					
-						<td v-for = "(item,index) in items" >
-							<!-- {{ weeks[index].item.week_value }} -->
-							<!-- 周几 -->
-							<span v-model="which_weekDay" v-if="(which_weekDay+index)<7">{{ dayNames[which_weekDay+index]}}</span>
-							<span v-else>{{ dayNames[which_weekDay+index-7]}}</span>	
-							<br>
+		<el-calendar class="calendar" date=""  v-model="showdate">
+		  <!-- 这里使用的是 2.5 slot 语法，对于新项目请使用 2.6 slot 语法-->
+		  <template
+		    slot="dateCell"
+		    slot-scope="{date, data}"
+				>
+		    <div style="height:100%" :class="data.isSelected ? 'is-selected' : ''"  @click="clickDay(data.day)">
+		      <div class="showday">{{ data.day.split('-').slice(1).join('-') }} {{ data.isSelected ? '✔️' : ''}}</div>
+					<div v-for="item of anpai">
+						<div v-if="item.day == data.day">
+							<div v-for="i of item.data" :key="i.doctor_id" class="plan-item">
+								<span>{{i.doctorName}}:</span>
+								<div v-for="d of i.date" class="date-item">
+									{{d.value}}
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- <span v-if="data.day == ">-->
+		    </div>
+		  </template>
+		</el-calendar>
+
+		<!-- 点击新增排班时的弹出框 -->
+		<el-dialog title="新增排班" :visible.sync="dialogAddArrange">
+
+				<!-- 弹话框内容 -->
+				<el-form :model="doctor_arrange" label-position="left">
 
 
+							<!-- 科室 -->
+							<!-- <el-form-item label="科室:" >
+									<el-select v-model="form.office_selected" placeholder="科室" style="width:100px;">
+											<el-option v-for="item in form.office" :value="item.text">
+											</el-option>
+									</el-select>
+							</el-form-item> -->
+					
+
+					<!-- 医生 -->
+					<el-form-item label="医生:" label-width="80px">
+						<el-select v-model="doctor_arrange.doctor_id"  style="width:200px;">
+							<el-option v-for="item of doctor_options" :key="item._id" :label="item.name" :value="item._id">
+							</el-option>
+						</el-select>
+					</el-form-item>
 
 
-							<!-- 日期几月几号 -->
-							<span v-if="month===1||month===3 ||month===5 ||month===7||month===8 ||month===10||month===12">
-								<span v-if="(day+index)<=31">{{ month }}-{{ day+index }}</span>
-								<span v-else>{{ month+1 }}-{{ day+index-31 }}</span>
-							</span>
-							<span v-else-if="month===4||month===6 ||month===9 ||month===11">
-								<span v-if="(day+index)<=30">{{ month }}-{{ day+index }}</span>
-								<span v-else>{{ month+1 }}-{{ day+index-30 }}</span>
-							</span>
-							<span v-else-if="year%4===0">
-								<span v-if="(day+index)<=29">{{ month }}-{{ day+index }}</span>
-								<span v-else>{{ month+1 }}-{{ day+index-29 }}</span>
-							</span>
-							<span v-else>
-								<span v-if="(day+index)<=28">{{ month }}-{{ day+index }}</span>
-								<span v-else>{{ month+1 }}-{{ day+index-28 }}</span>
-							</span>
+					<!-- 号段时长 -->
+					<!-- <el-form-item label="号段时长:" >
+							<el-select v-model="form.time[0].time_long"  style="width:100px;">
+									<el-option v-for="item in form.time" :value="item.time_long">
+									</el-option>
+							</el-select>
+					</el-form-item> -->
 
 
+							<!-- 复选框：允许线上预约 -->
+							<!-- <el-form-item>
+									<el-checkbox v-model="form.checked">
+											允许线上预约(如果系统对接了线上挂号App、微信服务号等)
+											<br>
+											<i style="opacity:.7;">如果不希望医生排班对外开放只允许电话预约，则取消勾选</i>
+									</el-checkbox>
+							</el-form-item> -->
 
+					<el-form-item label="日期：" label-width="80px">
+						<el-input
+							v-model="doctor_arrange.day"
+							:disabled="true"
+							suffix-icon="el-icon-date"
+							style="width: 200px;">
+						</el-input>
+					</el-form-item>
+					<!-- 排班时段 -->
+					<el-form-item label="排班时段:" label-width="80px">
+							<!-- 日选择 -->
+							<!-- <el-date-picker v-model="doctor_arrange.day" type="date" placeholder="选择日期" :picker-options="active_day"></el-date-picker> -->
 
+							<!-- 时间段选择 -->
+							<el-time-select placeholder="起始时间" v-model="doctor_arrange.start_time":picker-options="{
+											start: '08:30',
+											step: '00:15',
+											end: '18:30'
+										}">
+							</el-time-select>			  		     	 
+							<el-time-select placeholder="结束时间" v-model="doctor_arrange.end_time" :picker-options="{
+										start: '08:30',
+										step: '00:15',
+										end: '18:30',
+										minTime: doctor_arrange.start_time
+									}">
+							</el-time-select>
+					</el-form-item>
+					<el-form-item label="挂号费：" label-width="80px">
+						<el-input
+							v-model="doctor_arrange.money"
+							style="width: 200px;">
+						</el-input>
+					</el-form-item>
+					<el-form-item label="数量：" label-width="80px">
+						<el-input
+							v-model.number="doctor_arrange.number"
+							style="width: 200px;">
+						</el-input>
+					</el-form-item>
+				</el-form>
+			
 
-						</td>
-					</tr>
-					<tr class="td_65px">
-						<!-- <td v-for="item in items">
-							{{item.text}}
-						</td> -->
-						<td v-for="(item,week_index) in items">
-							<span v-for="(item1,todo_index) in item.todos" @click="find_index(week_index,todo_index)" v-bind:class="{ add_catchUp_myClass : item1.active , findIndex_myClass : item1.findIndex_active}">
-								<br>
-								{{ item1.text }}
-								<br>
-								{{ item1.time_start }}
-								{{ item1.time_end }}
-							</span>
-						</td>
-					</tr>
-			</table>
-			<!-- 底部三个按钮 -->
-	  		<div class="btns">
-		  		<router-link to ="/home/arrange/new_add_work">
-		  			<el-button type="success">
-		  				新增排班
-		  			</el-button>
-		  		</router-link>
-	  			<el-button class="btns_edit btn_foot">编辑排班</el-button>
-	  			<el-button class="btn_delete btn_foot">删除排班</el-button>
-	  		</div>  		
-  		</div>			
+				<!-- 弹话框的低下两个按钮 -->
+				<div slot="footer" class="dialog-footer">
+						<el-button @click="dialogAddArrange = false">取 消</el-button>
+						<el-button type="primary" @click="addArrange">确 定</el-button>
+				</div>
+		</el-dialog>
 		<router-view></router-view>
 	</div>
 </template>
-<style type="text/css">
-	body
-	{
-		background: #f1f1f1;
-	}
-	.app_first p
-	{
-	  color: #c2c2c2;
-	  font-size: 14px;
-	}
-	.app_first .btn
-	{
-		border-radius: 100%;
-		background: #ffffff;
-		width: 30px;
-		height: 30px;
-		box-shadow: 1px 1px 5px #888888;
-		border: #ebebeb;
-		color: #b4b4b4;
-		margin-left: 16px;
-		float: left;
-	}
-	.app_first .week
-	{
-		background: #ffffff;
-		color: #a1a1a3;
-		width: 100px;
-		height: 30px;
-		display: block;
-		padding-top: 5px;
-		text-align: center;
-		float: left;
-		margin-left: 16px;
-		margin-top: -3px;
-	}
-	.app_first .block
-	{
-		float: left;
-		margin-left: 1%;
-	}
-	.app_first .block1
-	{
-		margin-top: 6px;
-		padding-left: 20px;
-	}
-	.app_first .block_small
-	{
-		width: 120px;
-	}
-	.app_first .table1
-	{
-		width: 941px;
-		height: 500px;
-		position: absolute;
-		margin: 57px 26px;
-		background: #ffffff;
-	}
-	.app_first table
-	{
-		clear: left;
-		border-color:rgba(255,255,255,.5);
-		background: #ffffff;
-		width: 850px;
-		margin: 27px 48px;	
 
-	}
-	.app_first table
-	{
-		text-align: center;
-	}
-	.app_first .td_65px
-	{
-		height: 300px;
-		opacity: .7;		
-	}
-	.app_first .btns
-	{
-		margin-left:35%;		
-	}
-	.app_first .btn_foot
-	{
-		margin-left: 18px;
-		border: none;
-		width: 80px;
-		height: 30px;
-		background: #f4f4f4;
-	}
-	.app_first .btn_add
-	{
-		background: green;
-		color: #ffffff;
-	}
-</style>
 <script>
-	import store from '../../store';
 	var myDate = new Date();
 	import Vue from 'vue'; 
   	export default {
 	    data () {
 	     	 return {
-	     	 	weekText:"本周",
-	     	    pickerOptions0: {
-	     	        disabledDate(time) {
-	     	            return time.getTime() < Date.now() - 8.64e7;
-	     	            }
-	     	        },
-	     	 	todayTime_value: Date.now(),
-	     	 	year:myDate.getFullYear(),
-	     	 	month:myDate.getMonth() + 1,
-	     	 	day:myDate.getDate(),
-	     	 	
-	     	 	//获取今天是星期几(0-6 0代表星期天)
-	     	 	which_weekDay:myDate.getDay(),
-	     	 	dayNames:["星期日","星期一","星期二","星期三","星期四","星期五","星期六"],
-
-	     	 	// 所有科室
-	     	 	office_options: [{
-		     	 	          office_value: '选项1',
-		     	 	          office_label: '小儿科'
-		     	 	        }, {
-		     	 	          office_value: '选项2',
-		     	 	          office_label: '眼睛科'
-		     	 	        }, {
-		     	 	          office_value: '选项3',
-		     	 	          office_label: '口腔科'
-		     	 	        }, {
-		     	 	          office_value: '选项4',
-		     	 	          office_label: '牙科'
-		     	 	        }, {
-		     	 	          office_value: '选项5',
-		     	 	          office_label: '妇科'
-		     	 	        }],
-	     	 	office_value: '小儿科',
-	     	 	// 所有科室
-	     	 	type_options: [{
-		     	 	          type_value: '选项1',
-		     	 	          type_label: '普通门诊'
-		     	 	        }, {
-		     	 	          type_value: '选项2',
-		     	 	          type_label: '专家门诊'
-		     	 	        }, {
-		     	 	          type_value: '选项3',
-		     	 	          type_label: '专科门诊'
-		     	 	        }, {
-		     	 	          type_value: '选项4',
-		     	 	          type_label: '特需门诊'
-		     	 	        }, {
-		     	 	          type_value: '选项5',
-		     	 	          type_label: '夜间门诊'
-		     	 	        }],
-	     	 	type_value: '普通门诊',
-	     	 	//所有人
-	     	 	doctor_options: [{
-		     	 	          doctor_value: '选项1',
-		     	 	          doctor_label: '黄医生'
-		     	 	        }, {
-		     	 	          doctor_value: '选项2',
-		     	 	          doctor_label: '李医生'
-		     	 	        }, {
-		     	 	          doctor_value: '选项3',
-		     	 	          doctor_label: '牛医生'
-		     	 	        }, {
-		     	 	          doctor_value: '选项4',
-		     	 	          doctor_label: '张医生'
-		     	 	        }, {
-		     	 	          doctor_value: '选项5',
-		     	 	          doctor_label: '高医生'
-		     	 	        }],
-	     	 	doctor_value: '黄医生',
-	     	 	//复选框
-	     	 	checked: true,
-	     	 	// 一个星期
-	     	 	//7个休息
-	     	 	items:store.state.weeks_content,
-	     	 	// [
-	     	 		// { text:"休息" },
-	     	 		// { text:"休息" },
-	     	 		// { text:"休息" },
-	     	 		// { text:"休息" },
-	     	 		// { text:"休息" },
-	     	 		// { text:"休息" },
-	     	 		// { text:"休息" }
-	     	 	// ]
-
-
+					showdate: new Date(),
+	     	 	doctor_options: this.$store.state.doctorList,
+					doctor_id: 'all',
+					active_day: '',
+					dialogAddArrange: false,
+					doctor_arrange: {
+						hospital_id: this.$store.state.hospitalInfo._id,
+						doctor_id: '',
+						day: '',
+						start_time: '',
+						end_time: '',
+						money: '',
+						number: ''
+					},
+					anpai:[
+						// {
+						// 	day:'2020-04-02',
+						// 	data:[
+						// 		{doctor_id:'123',doctorName:'黄医生',date:[{_id:'',value:'09:30-10:30'},{_id:'',value:'09:30-10:30'}]},
+						// 		{doctor_id:'212',doctorName:'吴医生',date:[{_id:'',value:'09:30-10:30'}]},
+						// 		{doctor_id:'333',doctorName:'刘医生',date:[{_id:'',value:'09:30-10:30'}]},
+						// 		{doctor_id:'444',doctorName:'刘医生',date:[{_id:'',value:'09:30-10:30'}]},
+						// 		{doctor_id:'555',doctorName:'刘医生',date:[{_id:'',value:'09:30-10:30'}]}
+						// 	]
+						// },
+						// {
+						// 	day:'2020-04-04',
+						// 	data:[
+						// 		{doctor_id:'1213',doctorName:'黄医生',date:[{_id:'',value:'09:30-10:30'}]}
+						// 	]
+						// }
+					]
 	     	}
-	    },
-	    mounted:function(){
-
-	    	// this.items=JSON.parse(window.localStorage.getItem("weeks_contentValue"));
-	    	// console.log("aaaaaaaaa",JSON.parse(window.localStorage.getItem("weeks_contentValue")));
-	    },
-	    methods:{
-
-	    	getPrevWeek:function(){
-	    		
-	    		this.weekText = "上周";
-	    		this.day = this.day - 7;
-	    		console.log("打印出this.day",this.day);
-
-
-	    		if(this.day <= 0)
-	    		{
-	    			this.day = this.day + 31;
-	    			this.month = this.month - 1;
-	    		}
-	    		// if(this.day === this.todayTime_value.getDay() && this.month === (this.todayTime_value.getMonth() + 1))
-	    		// {
-	    		// 	this.weekText = "本周";
-	    		// 	console.log("本周")
-	    		// }
-	    		if(this.month < 1)
-	    		{
-	    			this.month = this.month + 12;
-	    			this.year = this.year - 1;
-	    		}
-	    		if(this.month > 12)
-	    		{
-	    			this.month = this.month - 12;
-	    		}
-	    	},
-	    	getNextWeek:function(){
-	    		console.log("下周");
-	    		this.weekText="下周";
-	    		this.day=this.day+7;
-	    		if(this.day > 31)
-	    		{
-	    			this.day = this.day - 31;
-	    			this.month = this.month + 1;
-	    		}
-	    		if(this.month > 12)
-	    		{
-	    			this.month = this.month - 12;
-	    			this.year = this.year + 1;
-	    		}
-	    		
-	    		if(this.day === new Date)
-	    		{
-	    			this.weekText = "本周";
-	    		}
-
-
-
-
-					// let that = this;
-					// console.log("11111",this);
-					// Vue.http.get('../static/next_week.json').then(function(response){
-					// 	console.log(response);
-					// 	console.log(response.data);
-					// 	console.log(response.data.weekText);
-					// 	that.weekText = response.data.weekText;
-					// 	that.weeks = response.data.weeks;
-					// 	// that.data = response.data;
-					// 	// console.log(that.data);
-					// },function(response){
-					// 	alert("请求失败了");
-					// })
+			},
+			watch:{
+				showdate(val,old_val) {
+					const new_date = this.$moment(val).format('YYYY-MM-');
+					const old_date = this.$moment(old_val).format('YYYY-MM-');
+					if(new_date != old_date) {
+  					this.getArrange();
+					}
 				},
+				doctor_id(val) {
+					this.getArrange();
+				}
+			},
+			// -------------------------- 挂载时---------
+	    mounted(){
+				this.getArrange();
+			},
+	    methods:{
+				// ------------------------------ 点击的日期---------------------
+				clickDay(day){
+					this.doctor_arrange.day = day;
+					this.active_day = day;
+					//console.log(day);
+				},
+
+				// --------------------------------- 点击新增排班,打开弹窗--------------------------
+				openDialogAddArrange(){
+					const day = this.active_day;
+					if(!day) {
+						this.$message({
+							type: 'warning',
+							message: '请选择日期'
+						})
+					}else {
+						this.dialogAddArrange = true;
+					}
+				},
+
+				// ---------------------------------- 点击  确认 添加排班 ----------------------
+				addArrange(){
+					if(this.doctor_arrange.doctor_id == '' || this.doctor_arrange.start_time == '' || this.doctor_arrange.end_time == '' || this.doctor_arrange.money == '' || this.doctor_arrange.number == '') {
+						this.$message({
+							type: 'error',
+							message: '请补充完整排班信息'
+						})
+					}else {
+						this.$request.post('/arrange/add',this.doctor_arrange).then(res=>{
+							this.$message({
+								type: 'success',
+								message: '新增排班成功'
+							})
+							this.dialogAddArrange = false;
+							this.doctor_arrange = { 
+								hospital_id: this.$store.state.hospitalInfo._id,
+								doctor_id: '',
+								day: '',
+								start_time: '',
+								end_time: '',
+								money: '',
+								number: ''
+							}
+							console.log(res.data);
+							this.getArrange();
+						})
+					}
+				},
+
+				// ---------------------------------获取医生排班列表-------------
+				getArrange(){
+					const hospital_id = this.$store.state.hospitalInfo._id;
+					const doctor_id = this.doctor_id;
+	 				
+					//console.log(this.$moment(this.date).format('YYYY-MM-'));
+					const date = this.$moment(this.showdate).format('YYYY-MM-')
+					this.$request.post('/arrange/list',{hospital_id,doctor_id,date}).then(res=>{
+						console.log(res.data);
+						console.log('---------');
+						this.anpai = res.data;
+						// this._handleArrange(res.data);
+					})
+				},
+
+
+			},
 			
-	    }
+			
 	}
 </script>
+
+<style>
+.arrange .calendar {
+	margin-left: 15px;
+	margin-right: 15px;
+	min-width: 1033px;
+}
+
+.arrange .operate {
+	margin: 15px;
+	overflow: hidden;
+}
+
+.arrange .operate .choose_doctor {
+	float: left;
+}
+
+.arrange .operate .btns {
+	float: left;
+	margin-left: 40px;
+}
+
+.arrange .is-selected {
+	color: #1989FA;
+}
+
+.arrange .showday {
+	font-size: 12px;
+	font-weight: bold;
+	text-align: right;
+	float: right;
+	width: 30%;
+}
+
+.arrange .plan-item {
+	font-size: 10px;
+	float: left;
+	width: 70%;
+}
+
+.arrange .date-item {
+	margin-left: 30px;
+}
+
+
+.arrange .el-calendar-table .el-calendar-day {
+	min-width: 150px;
+	height: 80px;
+}
+</style>

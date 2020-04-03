@@ -67,7 +67,7 @@
             message: '登录成功',
             type: 'success'
           });
-          this.$store.commit(SET_HOSPITAL_NAME,this.loginForm.hospital)
+          this.$store.commit(SET_HOSPITAL_NAME,res.data.hospitalInfo)
           this.$router.push({ path: 'home/hello',component:Hello})
         }
       },

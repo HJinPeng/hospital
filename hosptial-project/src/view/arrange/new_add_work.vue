@@ -316,7 +316,7 @@
 	{
 		background:#cae67a;
 		width:120px;
-		heigth:60px;
+		height:60px;
 		display:block;
 	}
 	.app_second .td_65px

@@ -6,8 +6,15 @@ import router from './router'
 import store from './store'
 
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-default/index.css';
+import 'element-ui/lib/theme-chalk/index.css';
+import 'font-awesome/css/font-awesome.css' 
+// import 'element-ui/lib/theme-default/index.css';
 //import 'element-ui/lib/theme-default/index.css'
+
+
+import moment from 'moment'
+moment.locale('zh-cn');
+Vue.prototype.$moment = moment;
 
 import request from './http'
 Vue.prototype.$request = request

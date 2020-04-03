@@ -13,7 +13,7 @@
 					   	 	<i class="Img">
 					   	 		<img src="../../assets/hospital.png">
 					   	 	</i>
-					   	 	<span>{{per.name}}</span>
+					   	 	<span>{{hospitalInfo.name}}</span>
 					    </span>
 					    <el-dropdown-menu slot="dropdown">
 						    <el-dropdown-item>
@@ -96,7 +96,7 @@
   	export default {
   		data() {
 	    	return {
-	    		per:this.$store.state.hospitalInfo,
+	    		hospitalInfo:this.$store.state.hospitalInfo,
 	    		time:{
 	    			month:date.getMonth()+1,
 	    			day:date.getDate(),

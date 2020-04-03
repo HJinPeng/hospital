@@ -1,6 +1,6 @@
 module.exports = options => {
   const jwt = require('jsonwebtoken');
-  const Hospital = require('../models/Hospital');
+  const Hospital = require('../models/hospital/Hospital');
 
   return async(req,res,next)=>{
     const token = String(req.headers.authorization || '').split(' ').pop();

@@ -1,6 +1,7 @@
 <template>
 	<div class ="sideBar">
-		<el-menu class="el-menu-vertical-demo menu" theme="dark">
+		<el-menu class="el-menu-vertical-demo menu" 
+			background-color="#545c64">
 			<el-menu-item index="1">
 			    <router-link to="/home/hello">
 			        <i class="fa fa-home icon" aria-hidden="true"></i>首页
@@ -57,11 +58,11 @@
 		left: 0;
 	}
 	.sideBar .menu a{
-		color: #bfcbd9;
+		color: #fff;
 		text-decoration: none;
 	}
 	.sideBar a.router-link-active{
-		color: #20a0ff;
+		color: #ffd04b;
 		text-decoration: none;
 	}
 	/*导航条图标*/
@@ -89,12 +90,28 @@
 
 </style>
 <script>
+	import {
+		SET_DOCTOR_LIST	
+	}from '../store/mutations-types'
 	import TopBars from '@/view/NavBar/topBars';
 	import Levelbar from '@/view/NavBar/Levelbar';
   	export default {
   		components:{
   			topBars:TopBars,
   			Levelbar,
-  		}
+			},
+			mounted(){
+				// ------------------ 全局方法，获取医生列表	
+				this.getDoctorList();
+			},
+			methods:{
+				getDoctorList(){
+					this.$request.post('/doctor/list',{hospital_id:this.$store.state.hospitalInfo._id}).then(res=>{
+						console.log(res);
+						//this.doctorList = res.data;
+						this.$store.commit(SET_DOCTOR_LIST,res.data)
+					})
+				},
+			}
   	}
 </script>

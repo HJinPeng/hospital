@@ -227,7 +227,7 @@
 
       // 图片上传回调
       handleAvatarSuccess(res, file) {
-        this.ruleForm.picture = URL.createObjectURL(file.raw);
+        this.ruleForm.picture = res.url;
       },
 
       // 图片上传前检测

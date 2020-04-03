@@ -8,10 +8,9 @@ import actions from './actions'
 import getters from './getters'
 
 const state = {
-  hospitalInfo: {
-    name: '需医生'
-  },
+  hospitalInfo: {},
   token:'',
+	doctorList: [],
   weeks_content:[
     { todos: [{text:"暂无排班" , time_start:"" , time_end:"" , active:false ,findIndex_active : false}] },
     { todos: [{text:"暂无排班" , time_start:"" , time_end:"" , active:false ,findIndex_active : false}] },
