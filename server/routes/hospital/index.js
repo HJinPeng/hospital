@@ -192,13 +192,18 @@ module.exports = app => {
         for(var j = 0 ; j < array.length;j++) {
           // 说明是这个日期的：2020-04-02
           if(arrange[i].day == array[j].day) {
-            console.log('arrange[i].day == array[j].day');
-            console.log(i);
-            console.log(j);
+            //console.log('arrange[i].day == array[j].day');
+            //console.log(i);
+            //console.log(j);
             var k;
             for(k = 0 ; k < array[j].data.length; k++) {
+              console.log('k',k);
+              console.log('array[j].data[k]',array[j].data[k].doctor_id);
+              console.log('arrange[i].doctor_id',arrange[i].doctor_id);
+              console.log('isequer',arrange[i].doctor_id+'' === array[j].data[k].doctor_id+'');
               // 说明是2020-04-02的某个医生的排班
-              if(arrange[i].doctor_id == array[j].data[k].doctor_id) {
+              if(arrange[i].doctor_id +'' == array[j].data[k].doctor_id +'') {
+                console.log('==');
                 let o = {};
                 o._id = arrange[i]._id;
                 o.value = arrange[i].start_time+'-'+arrange[i].end_time;
@@ -208,6 +213,7 @@ module.exports = app => {
             }
             // 说明是2020-04-02的，但没有暂时还没有该医生排班
             if(k == array[j].data.length) {
+              console.log('++');
               let arr_obj = {};
               arr_obj.doctor_id = arrange[i].doctor_id;
               arr_obj.doctorName = arrange[i].doctorInfo[0].name;
@@ -245,6 +251,7 @@ module.exports = app => {
     return array;
   }
 
+  // ----------------------------------- 返回排班安排-----------
   router.post('/arrange/list',async(req, res) => {
     const {hospital_id,doctor_id,date} = req.body;
     const date_rule = new RegExp("^"+date);
@@ -312,6 +319,47 @@ module.exports = app => {
     }
     // res.send({hospital_id,doctor_id,date});
   })
+
+
+  // ------------------------- 返回某个排班信息--------
+  router.get('/arrange/item/:_id',async(req,res) => {
+    const _id = req.params._id;
+    await ArrangeModel.findById(_id,function(err,docs){
+      if(err) {
+        return console.log(err);
+      }else {
+        res.send(docs);
+      }
+    })
+  });
+
+
+  // ----------------------------更新某个排班信息-------------------
+  router.put('/arrange/edit',async(req,res) => {
+    console.log(req.body);
+    const _id = req.body._id;
+    const model = req.body.model;
+    await ArrangeModel.updateOne({_id},model,function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send(docs);
+    })
+    //res.send(req.body);
+  })
+
+  
+  // -------------------------删除某个排班--------------------
+  router.delete('/arrange/delete/:_id',async(req,res)=>{
+    const _id = req.params._id;
+    await ArrangeModel.deleteOne({_id},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send('ok');
+    })
+  })
+
 
   app.use('/hospital/api',router);
 

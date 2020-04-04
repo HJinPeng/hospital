@@ -121,6 +121,19 @@
 					"pathName": "pages/home/home",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "登录页面",
+					"pathName": "pages/login/login",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "注册页面",
+					"pathName": "pages/register/register",
+					"scene": null
 				}
 			]
 		}

@@ -6,9 +6,9 @@ import {
 Page({
   data: {
     banners: [
-      // {title:"夏天流行病",image:"https://ossweb-img.qq.com/upload/adw/image/20200202/41ca83b59bf933d63353cdfba40cee69.jpeg",link:"https://www.baidu.com"},
-      // {title:"如何戴口罩",image:"https://ossweb-img.qq.com/upload/adw/image/20200124/8d2402e6095ca8a7ec4d671a3846bf94.jpeg",link:"https://www.baidu.com"},
-      // {title:"感冒怎么办",image:"https://ossweb-img.qq.com/upload/adw/image/20200123/e3bf3b30328abaaef040bf2446158f22.jpeg",link:"https://www.baidu.com"},
+      {title:"夏天流行病",image:"https://ossweb-img.qq.com/upload/adw/image/20200202/41ca83b59bf933d63353cdfba40cee69.jpeg",link:"https://www.baidu.com"},
+      {title:"如何戴口罩",image:"https://ossweb-img.qq.com/upload/adw/image/20200124/8d2402e6095ca8a7ec4d671a3846bf94.jpeg",link:"https://www.baidu.com"},
+      {title:"感冒怎么办",image:"https://ossweb-img.qq.com/upload/adw/image/20200123/e3bf3b30328abaaef040bf2446158f22.jpeg",link:"https://www.baidu.com"},
     ],
     entry: [
       {name:"预约挂号",image:"/assets/home/yuyue.png",url:"/pages/serve/serve"},
@@ -24,7 +24,7 @@ Page({
   },
   onLoad: function (options) {
     // 1. 获取banner
-    this._getBanner();
+    //this._getBanner();
   },
 
   //---------------------网络请求相关方法----------

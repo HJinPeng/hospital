@@ -1,0 +1,32 @@
+<!--pages/login/login.wxml-->
+<view class="wel-title">
+  登录就医助手
+</view>
+<van-cell-group>
+  <van-field
+    value="{{ login_info.phone }}"
+    label="手机账号"
+    placeholder="请输入手机号"
+    error-message="{{ error_phone }}"
+    bind:blur="checkPhone"
+  />
+  <van-field
+    value="{{ login_info.password }}"
+    label="密码"
+    type="password"
+    placeholder="请输入密码"
+    error-message="{{error_password}}"
+    bind:blur="checkPassword"
+  />
+</van-cell-group>
+
+<view class="login">
+  <van-button type="info" size="large" bindtap="handleLogin">登录</van-button>
+</view>
+
+<view class="other-operate">
+  <navigator>忘记密码？</navigator>
+  <navigator url="/pages/register/register">去注册?</navigator>
+</view>
+
+<van-toast id="van-toast" />
