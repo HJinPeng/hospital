@@ -1,12 +1,12 @@
 <!--pages/profile/profile.wxml-->
 <view class="info">
-  <view class="left">
-    <image class="image" src="/assets/common/tx.jpg" mode="widthFix"/>
+  <view class="left" >
+    <image class="image" src="{{patientInfo.image}}" mode="widthFix"/>
   </view>
   <view class="center">
-    <view class="name">手机注册用户</view>
+    <view class="name">{{patientInfo.name}}</view>
     <view class="line"></view>
-    <view class="phone">131****2767</view>
+    <view class="phone">{{patientInfo.phone}}</view>
   </view>
   <view class="right">
     >

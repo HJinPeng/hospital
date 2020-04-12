@@ -5,6 +5,23 @@
   padding-right: 20rpx;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: space-between;
   /* justify-content: space-around; */
+}
+
+.time .item {
+  width: 49%;
+  font-size: 26rpx;
+  margin-bottom: 16rpx;
+  background-color: #fff;
+  border: 1px solid #1296db;
+  border-radius: 4px;
+  text-align: center;
+  padding-top: 6rpx;
+  padding-bottom: 6rpx;
+}
+
+.time .item_active {
+  background-color: #1296db;
+  color: #fff;
 }

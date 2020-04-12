@@ -12,11 +12,11 @@ Component({
   },
   methods: {
     cardClick(option){
-      let url = option.currentTarget.dataset.url;
+      let arrange_id = option.currentTarget.dataset.arrange_id;
+      const patient_id = wx.getStorageSync('patientInfo')._id;
       
-      console.log(url)
       wx.navigateTo({
-        url: url,
+        url: '/pages/order/order?arrange_id='+arrange_id+'&patient_id='+patient_id,
       })
     }
   }

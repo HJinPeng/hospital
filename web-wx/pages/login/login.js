@@ -1,4 +1,5 @@
 // pages/login/login.js
+import { loginUser } from '../../service/user'
 import Toast from '/@vant/weapp/toast/toast';
 Page({
   data: {
@@ -44,7 +45,21 @@ Page({
   handleLogin(){
     const model = this.data.login_info;
     if(model.phone.length == 11 && model.password.length >=8 && model.password.length <=18) {
-      console.log('ok');
+      loginUser(model).then(res => {
+        console.log(res);
+        wx.setStorage({
+          data: res.patientInfo,
+          key: 'patientInfo',
+        })
+        wx.setStorage({
+          data: res.token,
+          key: 'token',
+        })
+        Toast('登录成功，正在跳转...')
+        wx.switchTab({
+          url: '/pages/home/home',
+        })
+      })
     }else {
       Toast('请正确填写账号密码');
     }

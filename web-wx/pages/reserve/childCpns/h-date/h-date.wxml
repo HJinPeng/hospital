@@ -2,7 +2,11 @@
 <h-title title="可预约时间段"/>
 <view class="time">
   <block wx:for="{{lists}}" wx:key="index">
-    <van-button size="small"  custom-style="font-size:24rpx;margin-bottom: 20rpx;" type="default">{{item.time}} 剩 {{item.number}}</van-button>
+    <view class="item {{item._id == active_id ? 'item_active': ''}}" bindtap="clickItem" data-_id="{{item._id}}">
+      <text>{{item.day}} {{item.start_time}}-{{item.end_time}}</text>
+      <text>\n</text>
+      <text>剩{{item.number}}个号 | 挂号费:{{item.money}}元</text>
+    </view>
   </block>
 </view>
-<van-button custom-style="margin-top: 20rpx" size="large" type="info" color="linear-gradient(to right, #4bb0ff, #6149f6)">去挂号</van-button>
+<van-button custom-style="margin-top: 20rpx" size="large" type="info" color="linear-gradient(to right, #4bb0ff, #6149f6)" bindtap="toOrder">去挂号</van-button>

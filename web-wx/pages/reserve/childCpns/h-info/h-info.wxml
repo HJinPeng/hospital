@@ -6,15 +6,15 @@
     </view>
     <view class="right">
       <view class="name">{{info.name}}</view>
-      <view class="skill">{{info.skill}}</view>
+      <view class="skill">{{info.good}}</view>
     </view>
   </view>
   <view class="bottom">
     <view class="rate">
-      评分 <van-rate size="{{14}}" value="{{ info.rate }}"/>
+      评分 <van-rate size="{{14}}" value="4"/>
     </view>
     <view class="number">
-      治疗人数 <text class="text">{{info.number}}</text>
+      治疗人数 <text class="text">216</text>
     </view>
   </view>
 </view>

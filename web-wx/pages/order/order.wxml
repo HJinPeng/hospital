@@ -11,7 +11,9 @@
     </van-cell-group>
   </block>
   <view class="button" wx:if="{{type !== ''}}">
-    <van-button plain type="info" wx:if="{{type == 'nopay'}}">去支付</van-button>
-    <van-button plain type="danger"  wx:if="{{type == 'wait'}}">取消订单</van-button>
+    <van-button plain type="info" wx:if="{{type == 'nopay'}}" bindtap="toPay">去支付</van-button>
+    <!-- <van-button plain type="danger"  wx:if="{{type == 'wait'}}">取消订单</van-button> -->
   </view>
 </view>
+
+<van-toast id="van-toast" />

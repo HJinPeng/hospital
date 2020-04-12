@@ -3,7 +3,7 @@
   <h-border>
     <view class="content">
       <block wx:for="{{lists}}" wx:key="index">
-        <view class="item" bindtap="iconClick" data-url="{{item.url}}">
+        <view class="item" bindtap="iconClick" data-url="{{item.url}}" data-doctor_id="{{item._id}}">
           <image class="image" src="{{item.image}}" mode="widthFix"></image>
           <view class="name">{{item.name}}</view>
         </view>

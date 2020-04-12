@@ -1,20 +1,42 @@
 // pages/reserve/reserve.js
+import {
+  getDoctorAndArrange
+} from '../../service/hospital'
+
+import moment from 'moment'
+
 Page({
   data: {
     info: {
-      image: "/assets/home/bingli.png",
-      name: "黄医师",
-      skill: "擅长骨科，流感",
-      rate: 3,
-      number: 216
+      // image: "/assets/home/bingli.png",
+      // name: "黄医师",
+      // good: "擅长骨科，流感",
+      // rate: 3,
+      // number: 216
     },
     date: [
-      {time:"今天 10:00",number:3},
-      {time:"今天 11:00",number:3},
-      {time:"今天 15:00",number:4},
-      {time:"今天 16:00",number:2},
-      {time:"明天 16:00",number:2},
-      {time:"明天 16:00",number:2},
     ]
-  }
+  },
+  
+  onLoad(options){
+    console.log(options);
+    const doctor_id = options._id;
+    console.log(doctor_id);
+    //const day = moment(new Date()).format('YYYY-MM-DD');
+    //console.log(day);
+    const day = '2020-03-10'
+    this._getDoctorAndArrange(doctor_id,day);
+  },
+
+  // ------------------------ 获取医生信息和排班--------
+  _getDoctorAndArrange(doctor_id,day){
+    getDoctorAndArrange(doctor_id,day).then(res => {
+      console.log(res);
+      const {doctor,arrange} = res;
+      this.setData({
+        info: doctor,
+        date: arrange
+      })
+    })
+  },
 })

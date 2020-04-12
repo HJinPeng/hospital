@@ -1,29 +1,29 @@
 <!--pages/record/childCpns/h-card/h-card.wxml-->
 <view class="out-h-card">
-  <block wx:for="{{lists.data}}"  wx:key="index">
-    <view class="card" bindtap="cardClick" data-url="{{item.url}}">
-      <h-border>
+  <block wx:for="{{lists}}"  wx:key="index">
+    <view class="card" bindtap="cardClick" data-arrange_id="{{item.arrange_id}}">
+      <h-border color="{{item.color}}">
         <view class="content">
           <view class="title">
             <view class="left">
-              <van-icon name="{{item.icon}}" color="#1296db" size="50rpx"/>
+              <van-icon name="hotel-o" color="{{item.color==undefined?'#1296db':item.color}}" size="50rpx"/>
               <text class="name">{{item.name}}</text>
             </view>
             <view class="right">
-              {{item.title_right}}
+              查看详情
             </view>
           </view>
           <view class="info">
             <view class="one">
               <view class="left">
-                {{item.one_left}}
+                {{item.content}}
               </view>
-              <view class="right"  style="color: {{lists.color}}">
-                {{item.one_right}}
-              </view>
+              <!-- <view class="right"  style="color: {{item.status==0? '#f00':'#00FA9A'}}">
+                {{item.status==0? '待就诊':'已完成'}}
+              </view> -->
             </view>
             <view class="two">
-              {{item.two}}
+              {{item.time}}
             </view>
           </view>
         </view>

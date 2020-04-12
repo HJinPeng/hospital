@@ -1,4 +1,4 @@
 <!--components/h-border/h-border.wxml-->
-<view class="border">
+<view class="border" style="border: 1px solid {{ color==''? '#1296db':color}};box-shadow: 0 1px 5px {{ color==''? '#1296db':color}};">
   <slot/>
 </view>

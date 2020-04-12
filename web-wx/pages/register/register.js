@@ -1,4 +1,8 @@
 // pages/register/register.js
+import {
+  registerUser
+} from '../../service/user'
+
 import Toast from '/@vant/weapp/toast/toast';
 Page({
   data: {
@@ -11,8 +15,9 @@ Page({
       height: '',
       weight: '',
       allergy: '',
-      image:''
+      image: ''
     },
+    image:[],
     error_phone: '',
     error_password: '',
     error_sex: '',
@@ -143,7 +148,12 @@ Page({
     if(model.phone.length == 11 && model.password.length >=8 && model.password.length <=18
       && model.name != '' && (model.sex == '男'|| model.sex == '女')
       && model.age != '' && model.height != '' && model.weight != '' && model.allergy != '') {
-      console.log('ok');
+      registerUser(model).then(res => {
+        Toast('注册成功，返回登录');
+        wx.navigateTo({
+          url: '/pages/login/login',
+        })
+      })
     }else {
       Toast('补充完整信息再提交');
     }
@@ -152,7 +162,30 @@ Page({
   // ------------------------ 上传头像----------------
   afterUpload(event){
     const { file } = event.detail;
-    console.log(file);
+    const that = this;
+    // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
+    wx.uploadFile({
+      url: 'http://localhost:3000/wx/api/upload', 
+      filePath: file.path,
+      name: 'file',
+      formData: { user: 'test' },
+      success(res) {
+        console.log(JSON.parse(res.data));
+        const data = JSON.parse(res.data);
+        const image = 'register_info.image';
+        const show_image = 'image[0].url';
+        const show_image_true = 'image[0].isImage'
+        that.setData({
+          [image] : data.url,
+          [show_image]: data.url,
+          [show_image_true]: true
+        })
+        // 上传完成需要更新 fileList
+        // const { fileList = [] } = this.data;
+        // fileList.push({ ...file, url: res.data });
+        // this.setData({ fileList });
+      }
+    });
   },
 
   /**

@@ -2,9 +2,9 @@
 <!-- <view class="order"> -->
   <!-- <h-title title="挂号记录"/> -->
   <van-tabs swipeable animated type="card" nav-class="tabs" color="#1296db">
-    <van-tab title="未支付">
+    <!-- <van-tab title="未支付">
       <h-card lists="{{nopay}}" out-h-card="tab-card"/>
-    </van-tab>
+    </van-tab> -->
     <van-tab title="待就诊">
       <h-card lists="{{wait}}" out-h-card="tab-card"/>
     </van-tab>
