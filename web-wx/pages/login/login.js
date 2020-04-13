@@ -45,7 +45,8 @@ Page({
   handleLogin(){
     const model = this.data.login_info;
     if(model.phone.length == 11 && model.password.length >=8 && model.password.length <=18) {
-      loginUser(model).then(res => {
+      loginUser(model).then(result => {
+        const res = result.data;
         console.log(res);
         wx.setStorage({
           data: res.patientInfo,

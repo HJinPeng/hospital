@@ -2,14 +2,15 @@
 	<div class="reservation">
 		<div class="h-header-bottom">
 			<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" style="background-color: #ffffff;">
-				<router-link to="/home/reservation/Mrliu">
-			        <el-menu-item index="1">今日预约</el-menu-item>
-			    </router-link>
-
-
-			    <router-link to="/home/reservation/appointreport">
-			        <el-menu-item index="2">预约报备</el-menu-item>
-			    </router-link>
+				<el-menu-item index="1">
+					<router-link to="/home/reservation/Mrliu">今日预约</router-link>
+				</el-menu-item>
+				<el-menu-item index="2">
+					<router-link to="/home/reservation/appointreport">预约报备</router-link>
+				</el-menu-item>
+				<!-- <router-link to="/home/reservation/appointreport">
+						<el-menu-item index="2">预约报备</el-menu-item>
+				</router-link> -->
 <!-- 			    
 			    <router-link to="">
 			        <el-menu-item index="3">所有预约</el-menu-item>
@@ -61,11 +62,8 @@ import "../../assets/css/style1.css"
 	}
 </script>
 
-<style>
-	body{
-        /*background-color: #333;*/
-        background-color: #F6F6F6;
-    }
-    
-	
+<style scoped>
+	.reservation .h-header-bottom a {
+		text-decoration: none;
+	}
 </style>

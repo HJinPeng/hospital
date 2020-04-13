@@ -38,7 +38,8 @@ Page({
  // -------------------- 获取订单信息--------------
   _getOrderInfo(arrange_id,patient_id) {
 
-    getOrderInfo(arrange_id,patient_id).then(res => {
+    getOrderInfo(arrange_id,patient_id).then(result => {
+      const res = result.data;
       console.log(res);
       const data = res[0];
       let arr = [];
@@ -80,7 +81,7 @@ Page({
 
  // ------------------- 去支付 -------------------
   toPay() {
-    toMakeOrder(this.data.arrange_id,this.data.patient_id).then(res => {
+    toMakeOrder(this.data.arrange_id,this.data.patient_id).then(result => {
       Toast('支付成功！');
       setTimeout(()=>{
         wx.switchTab({

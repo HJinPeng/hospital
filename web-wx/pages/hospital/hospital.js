@@ -29,7 +29,8 @@ Page({
 
   // ------------------- 获取医院信息---------------
   _getHospitalInfo(hospital_id) {
-    getHospitalInfo(hospital_id).then(res => {
+    getHospitalInfo(hospital_id).then(result => {
+      const res = result.data;
       console.log(res);
       const {hospital, doctor} = res;
       const address = "link.address";

@@ -148,7 +148,7 @@ Page({
     if(model.phone.length == 11 && model.password.length >=8 && model.password.length <=18
       && model.name != '' && (model.sex == '男'|| model.sex == '女')
       && model.age != '' && model.height != '' && model.weight != '' && model.allergy != '') {
-      registerUser(model).then(res => {
+      registerUser(model).then(result => {
         Toast('注册成功，返回登录');
         wx.navigateTo({
           url: '/pages/login/login',

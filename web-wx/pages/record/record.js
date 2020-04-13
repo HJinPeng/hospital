@@ -36,7 +36,8 @@ Page({
   _getOrderList() {
     const patientInfo = wx.getStorageSync('patientInfo');
     const patient_id = patientInfo._id;
-    getOrderList(patient_id).then(res => {
+    getOrderList(patient_id).then(result => {
+      const res = result.data;
       console.log(res);
       let wait = [];
       let finish = [];

@@ -149,27 +149,48 @@ module.exports = app => {
   })
 
 
+  // ----------------------------- 订单是否已存在-------------
+  router.post('/order/isexist',async(req,res) => {
+    const {arrange_id, patient_id} = req.body;
+    await OrderModel.find({arrange_id,patient_id},async function(err,docs) {
+      if(err) {
+        return console.log(err);
+      }
+      if(docs.length == 0) {
+        res.status(200).send('order is no exist');
+      }else {
+        res.status(402).send('请勿重复挂号！');
+      }
+    })
+  })
+
   // ----------------------------- 挂号接口---------------------
   router.post('/order/add',async(req, res) => {
     const {arrange_id, patient_id} = req.body;
-    await ArrangeModel.findById({'_id':arrange_id},function(err,docs){
+    await OrderModel.find({arrange_id,patient_id},async function(err,docs) {
       if(err) {
         return console.log(err);
       }
-      const number = docs.number - 1;
-      ArrangeModel.updateOne({'_id':arrange_id},{'number':number},function(err,docs){
+      await ArrangeModel.findById({'_id':arrange_id},function(err,docs){
         if(err) {
           return console.log(err);
         }
+        const number = docs.number - 1;
+        ArrangeModel.updateOne({'_id':arrange_id},{'number':number},function(err,docs){
+          if(err) {
+            return console.log(err);
+          }
+        })
+  
       })
-
+      await OrderModel.create({arrange_id,patient_id},function(err, docs) {
+        if(err) {
+          return console.log(err);
+        }
+        res.send('add order is ok');
+      });
     })
-    await OrderModel.create({arrange_id,patient_id},function(err, docs) {
-      if(err) {
-        return console.log(err);
-      }
-      res.send('add order is ok');
-    });
+    
   })
 
 

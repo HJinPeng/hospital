@@ -30,7 +30,8 @@ Page({
 
   // ------------------------ 获取医生信息和排班--------
   _getDoctorAndArrange(doctor_id,day){
-    getDoctorAndArrange(doctor_id,day).then(res => {
+    getDoctorAndArrange(doctor_id,day).then(result => {
+      const res = result.data;
       console.log(res);
       const {doctor,arrange} = res;
       this.setData({

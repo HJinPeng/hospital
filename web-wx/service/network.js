@@ -15,7 +15,7 @@ function request(options) {
       method: options.method,
       data: options.data,
       success: function(res){
-        resolve(res.data);
+        resolve(res);
       },
       fail: reject,
       complete: res => {

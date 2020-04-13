@@ -2,6 +2,7 @@
   "component": true,
   "usingComponents": {
     "van-button": "@vant/weapp/button/index",
-    "h-title": "/components/h-title/h-title"
+    "h-title": "/components/h-title/h-title",
+    "van-notify": "@vant/weapp/notify/index"
   }
 }

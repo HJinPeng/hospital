@@ -34,7 +34,8 @@ Page({
   // ---------------------------- 方法--------------------
   // 获取所有医院信息
   _getHospital(){
-    getHospital().then(res => {
+    getHospital().then(result => {
+      const res  = result.data;
       let array = [];
       const hospital = res;
       const length = hospital.length;
