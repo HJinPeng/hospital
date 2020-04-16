@@ -84,14 +84,7 @@ export default new Router({
             },
             {path:'reservation',component: Reservation,name:'预约',
                 children:[
-                  {path:'Mrliu',component: Mrliu,name:'今日预约',
-                      children:[
-                        {path:'Visdoctor',component: Visdoctor,name:'出诊医生'},
-                        {path:'liuContent',component: LiuContent,name:'刘医生'},
-                        {path: '/', redirect: 'Visdoctor' }
-                      ]
-
-                  },
+                  {path:'Mrliu',component: Mrliu,name:'今日预约'},
                   {path:'Vdetails',component: Vdetails,name:'详情页'},
                   {path: '/', redirect: 'Mrliu' },
                   {path: 'appointreport', component: Appointreport,name:'预约报备' }

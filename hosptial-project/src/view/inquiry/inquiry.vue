@@ -8,10 +8,7 @@
       <el-row class="containRow" :gutter="20">
         <el-col :span="6">
           <div class="grid-content bg-purple first-nav">
-            <span>当前有1人等候</span>
-            
-            <router-link to="/home/Noinquiry"><span class="color"><i class="fa fa-retweet"></i>切换就诊人 </span></router-link>
-           
+            <router-link to="/home/reservation/Mrliu"><span class="color"><i class="fa fa-retweet"></i>切换就诊人 </span></router-link>
           </div>
         </el-col>
 
@@ -167,6 +164,10 @@
     },
     components:{
       inquiryone:InquiryOne
+    },
+    mounted(){
+      const orderInfo = JSON.parse(decodeURIComponent(this.$route.query.orderInfo));
+      console.log(orderInfo);
     },
     methods:{
       //编辑界面显示

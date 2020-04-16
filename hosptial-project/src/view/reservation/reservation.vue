@@ -25,14 +25,14 @@
 </template>
 
 <script>
-import "../../assets/css/style1.css"
+// import "../../assets/css/style1.css"
 	//npm i element-ui -S 等同于
 	//npm install element-ui --save
 	export default {
 	  name: 'home',
 	  data: function () {
 	    return {
-	    	 value3: [new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)],
+	    	value3: [new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)],
 	    	formInline: {
                 user: '',
                 region: ''
@@ -63,7 +63,11 @@ import "../../assets/css/style1.css"
 </script>
 
 <style scoped>
-	.reservation .h-header-bottom a {
-		text-decoration: none;
-	}
+.reservation .el-menu-vertical-demo .el-menu-item,.Visdoctor .el-menu-vertical-demo .el-menu-item{
+	text-align: left;
+}
+
+.reservation .h-header-bottom a {
+	text-decoration: none;
+}
 </style>

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import "../../assets/css/style1.css"
+// import "../../assets/css/style1.css"
 	//npm i element-ui -S 等同于
 	//npm install element-ui --save
 	export default {

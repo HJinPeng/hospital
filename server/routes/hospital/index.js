@@ -360,6 +360,143 @@ module.exports = app => {
     })
   })
 
+  //-------------------------查看某天(某天后的全部，全部)某医生(全部医生)的预约订单
+  router.post('/order/list',async(req,res) => {
+    const {hospital_id,doctor_id,day} = req.body;
+    console.log('day',typeof day);
+    if(day == 'all') {
+      if(doctor_id == 'all') {
+        console.log('all');
+        await ArrangeModel.aggregate([
+          {
+            $match: {
+              'hospital_id': mongoose.Types.ObjectId(hospital_id)
+            }
+          },
+          {
+            $lookup: {
+              from: 'orders',
+              localField: '_id',
+              foreignField: 'arrange_id',
+              as: 'orderList'
+            }
+          },
+          {
+            $lookup: {
+              from: 'patients',
+              localField: 'orderList.patient_id',
+              foreignField: '_id',
+              as: 'patientInfo'
+            }
+          }
+        ],function(err,docs){
+          if(err) {
+            return console.log(err);
+          }
+          console.log(docs);
+          res.send(docs);
+        })
+      }else{
+        await ArrangeModel.aggregate([
+          {
+            $match: {
+              'hospital_id': mongoose.Types.ObjectId(hospital_id),
+              'doctor_id': mongoose.Types.ObjectId(doctor_id)
+            }
+          },
+          {
+            $lookup: {
+              from: 'orders',
+              localField: '_id',
+              foreignField: 'arrange_id',
+              as: 'orderList'
+            }
+          },
+          {
+            $lookup: {
+              from: 'patients',
+              localField: 'orderList.patient_id',
+              foreignField: '_id',
+              as: 'patientInfo'
+            }
+          }
+        ],function(err,docs){
+          if(err) {
+            return console.log(err);
+          }
+          console.log(docs);
+          res.send(docs);
+        })
+      }
+    }else {
+      if(doctor_id == 'all') {
+        console.log('all');
+        await ArrangeModel.aggregate([
+          {
+            $match: {
+              'hospital_id': mongoose.Types.ObjectId(hospital_id),
+              'day': day
+            }
+          },
+          {
+            $lookup: {
+              from: 'orders',
+              localField: '_id',
+              foreignField: 'arrange_id',
+              as: 'orderList'
+            }
+          },
+          {
+            $lookup: {
+              from: 'patients',
+              localField: 'orderList.patient_id',
+              foreignField: '_id',
+              as: 'patientInfo'
+            }
+          }
+        ],function(err,docs){
+          if(err) {
+            return console.log(err);
+          }
+          console.log(docs);
+          res.send(docs);
+        })
+      }else{
+        await ArrangeModel.aggregate([
+          {
+            $match: {
+              'hospital_id': mongoose.Types.ObjectId(hospital_id),
+              'doctor_id': mongoose.Types.ObjectId(doctor_id),
+              'day': day
+            }
+          },
+          {
+            $lookup: {
+              from: 'orders',
+              localField: '_id',
+              foreignField: 'arrange_id',
+              as: 'orderList'
+            }
+          },
+          {
+            $lookup: {
+              from: 'patients',
+              localField: 'orderList.patient_id',
+              foreignField: '_id',
+              as: 'patientInfo'
+            }
+          }
+        ],function(err,docs){
+          if(err) {
+            return console.log(err);
+          }
+          console.log(docs);
+          res.send(docs);
+        })
+      }
+    }
+    
+  })
 
   app.use('/hospital/api',router);
 
