@@ -16,8 +16,8 @@ import Personal from '@/view/information/personal'
 
 // 项目模块
 import project from '@/view/project/project'
-import smallproject from '@/view/project/smallproject'
-import Package from '@/view/project/package'
+import examination from '@/view/project/examination'
+import medicinal from '@/view/project/medicinal'
 import registration from '@/view/project/registration'
 // 会员模块
 import members from '@/view/members/member'
@@ -76,10 +76,10 @@ export default new Router({
             },
             {path:'project',component: project,name:'项目',
                 children:[
-                  {path:'smallproject',component: smallproject,name:'子项目'},
-                  {path:'package',component: Package,name:'套餐'},
+                  {path:'examination',component: examination,name:'检查费'},
+                  {path:'medicinal',component: medicinal,name:'药品管理'},
                   {path:'registration',component: registration,name:'挂号费'},
-                  {path: '/', redirect: 'smallproject' }//在子路由定向到smallproject
+                  {path: '/', redirect: 'examination' }//examination
                 ]
             },
             {path:'reservation',component: Reservation,name:'预约',

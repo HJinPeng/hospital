@@ -1,7 +1,7 @@
 <template >
 	<div class="Visdoctor">
 		<template>
-			<el-table :data="tableData" border style="width: 100%;">
+			<el-table :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase())|| data.phone.toLowerCase().includes(search.toLowerCase()))" border style="width: 100%;">
 				<el-table-column label="时间" sortable :sort-method="sortTime">
 					<template scope="scope">
 						<el-icon name="time"></el-icon>
@@ -22,7 +22,13 @@
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column label="操作" style="text-aligin:left;">
+				<el-table-column style="text-aligin:left;">
+					<template slot="header" slot-scope="scope">
+						<el-input
+							v-model="search"
+							size="mini"
+							placeholder="输入姓名/电话关键字"/>
+					</template>
 					<template scope="scope">
 						<div slot="reference">
 							<span><router-link :to="{path: '/home/Inquiry',query:{orderInfo: JSON.stringify(scope.row)}}" :key="scope.row.order_id"><el-button type="text" :style="scope.row.status == 1 ? 'color:#5daf34':'color: #3a8ee6'"><i class="el-icon-document"></i> {{scope.row.status == 1 ? '复诊':'问诊'}}</el-button></router-link></span>
@@ -49,6 +55,7 @@
 		},
 	  data() {
 	    return {
+				search:''
 	    }
 	  },
 	

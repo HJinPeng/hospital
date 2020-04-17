@@ -34,7 +34,19 @@
       <el-table-column  prop="name" label="病人姓名"></el-table-column>
       <el-table-column  prop="phone" label="联系电话"></el-table-column>
       <el-table-column  prop="buy_time" label="下单时间" width="200"></el-table-column>
-      <el-table-column  prop="status_value" label="状态"  :filters="[{ text: '待就诊', value: '待就诊' }, { text: '已过期', value: '已过期' }, { text: '已完成', value: '已完成' }]" :filter-method="filterStatus"></el-table-column>
+      <el-table-column  prop="status_value" label="状态"  :filters="[{ text: '待就诊', value: '待就诊' }, { text: '已过期', value: '已过期' }, { text: '已完成', value: '已完成' }]" :filter-method="filterStatus">
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.status_value == '待就诊'"
+            type="primary"
+            disable-transitions>{{scope.row.status_value}}</el-tag>
+          <el-tag v-else-if="scope.row.status_value == '已过期'"
+            type="danger"
+            disable-transitions>{{scope.row.status_value}}</el-tag>
+          <el-tag v-else-if="scope.row.status_value == '已完成'"
+            type="success"
+            disable-transitions>{{scope.row.status_value}}</el-tag>
+        </template>
+      </el-table-column>
     
       <el-table-column label="操作">
         <template slot="header" slot-scope="scope">
@@ -44,78 +56,15 @@
             placeholder="输入姓名关键字"/>
         </template>
         <template scope="scope">
-          <el-button size="small"  @click="handleEdit(scope.$index, scope.row)"> 编辑</el-button>
-          <el-button size="small" type="danger"  @click="handleDelete(scope.$index, scope.row)">删除</el-button> 
+          <el-button size="small" type="primary"> 查看</el-button>
         </template>
       </el-table-column>
     </el-table>
   </el-table>    
 </div>
-  
-  <!-- 点击编辑出现的弹窗 -->
-  <el-dialog title="修改预约信息" v-model="dialogFormVisible" size="tiny" >
-    <el-form ref="form" :model="form" label-width="80px">
-      <el-form-item label="创建时间">
-        <el-input v-model="form.time"></el-input>
-      </el-form-item>
-      <el-form-item label="客户姓名">
-        <el-input v-model="form.name"></el-input>
-      </el-form-item>
-      <el-form-item label="联系电话">
-        <el-input v-model="form.phone"></el-input>
-      </el-form-item>
-      <el-form-item label="报备来源">
-        <el-input v-model="form.source"></el-input>
-      </el-form-item>
-      <el-form-item label="有效期">
-        <el-input v-model="form.indate"></el-input>
-      </el-form-item>
-      <el-form-item label="状态">
-      <el-select v-model="form.usestate" placeholder="请选择">
-        <el-option label="生效中" value="生效中"></el-option>
-        <el-option label="已确认" value="已确认"></el-option>
-        <el-option label="已过期" value="已过期"></el-option>
-      </el-select>
-      </el-form-item>
-      <el-form-item class="center">
-        <el-button type="primary" @click="handleSave" :loading="editLoading">修改</el-button>
-        <el-button @click="dialogFormVisible = false">取消</el-button>
-      </el-form-item>
-    </el-form>
-  </el-dialog>  
-  <!-- 点击添加项目出现的弹窗 -->
-  <el-dialog title="添加预约信息" v-model="dialogFormVisibleadd" size="tiny">
-    <el-form ref="form" :model="form" label-width="80px">
-      <el-form-item label="创建时间">
-        <el-input v-model="form.time"></el-input>
-      </el-form-item>
-      <el-form-item label="客户姓名">
-        <el-input v-model="form.name"></el-input>
-      </el-form-item>
-      <el-form-item label="联系电话">
-        <el-input v-model="form.phone"></el-input>
-      </el-form-item>
-      <el-form-item label="报备来源">
-        <el-input v-model="form.source"></el-input>
-      </el-form-item>
-      <el-form-item label="有效期">
-        <el-input v-model="form.indate"></el-input>
-      </el-form-item>
-      <el-form-item label="状态">
-        <el-select v-model="form.usestate" placeholder="请选择">
-        <el-option label="生效中" value="生效中"></el-option>
-        <el-option label="已确认" value="已确认"></el-option>
-        <el-option label="已过期" value="已过期"></el-option>
-      </el-select>
-      </el-form-item>
-      <el-form-item class="center">
-        <el-button type="primary" @click="handleSaveadd" :loading="editLoading">修改</el-button>
-        <el-button @click="dialogFormVisibleadd = false">取消</el-button>
-      </el-form-item>
-    </el-form>
-  </el-dialog>  
+
   <!-- 分页 -->
-  <div class="block">
+  <!-- <div class="block">
      <el-pagination
        @size-change="handleSizeChange"
        @current-change="handleCurrentChange"
@@ -123,9 +72,9 @@
        :page-sizes="[10, 20, 30, 40]"
        :page-size="100"
        layout="total, sizes, prev, pager, next, jumper"
-       :total="tableData.length">
+       :total="order_list.length">
      </el-pagination>
-   </div>
+   </div> -->
    </div>
    </div>
 </template>
@@ -273,64 +222,7 @@ export default {
       this.getOrderList(doctor_id,day);
     },
 
-    // filterOrder(){
-    //   let now = moment(new Date()).format('HH:mm');
-    //   let status = this.formInline.status;
-    //   if(status == 'wait') {
-
-    //   }
-    // },
-    
-     handleEdit (index, row) {
-       this.dialogFormVisible = true;
-       this.form = Object.assign({}, row);
-       this.table_index = index;
-     },
-
-     handleSave () {
-       this.$confirm('确认提交吗？', '提示', {
-         confirmButtonText: '确定',
-         cancelButtonText: '取消',
-         cancelButtonClass: 'cancel'
-       }).then(() => {
-        this.editLoading = true;//显示正在修改，圆圈跑起来
-        this.tableData[this.table_index] = this.form;
-        this.tableData.splice(this.table_index, 1, this.form);
-        this.$message({
-           message: "操作成功！",
-           type: 'success'
-         });
-         this.editLoading = false;
-         this.dialogFormVisible = false;
-       })
-     },
-
-     handleSaveadd () {
-
-       this.$confirm('确认提交吗？', '提示', {
-         confirmButtonText: '确定',
-         cancelButtonText: '取消',
-         cancelButtonClass: 'cancel'
-       }).then(() => {
-        //this.editLoading = true;//显示正在修改，圆圈跑起来
-        let vm=this;
-        vm.tableData.push(vm.form);
-        this.$message({
-           message: "操作成功！",
-           type: 'success'
-        });
-        this.dialogFormVisibleadd = false;
-       });
-     },
-
-     handleDelete (index, row) {
-       this.tableData.splice(index, 1);
-       this.$message({
-         message: "操作成功！",
-         type: 'success'
-       });
-     },
-
+ /*
       handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       },
@@ -340,7 +232,7 @@ export default {
       },
       handleSelect(key, keyPath) {
       console.log(key, keyPath);
-      }
+      }*/
   }
 }
 </script>

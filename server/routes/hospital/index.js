@@ -13,6 +13,8 @@ module.exports = app => {
   const HospitalModel = require('../../models/hospital/Hospital');
   const DoctorModel = require('../../models/hospital/Doctor');
   const ArrangeModel = require('../../models/hospital/Arrange');
+  const ExamModel = require('../../models/hospital/Exam');
+  const MedicModel = require('../../models/hospital/Medic');
 
   // -------------------------------------------上传文件接口---------------------
   const upload = multer({dest:__dirname + '/../../uploads'})
@@ -498,6 +500,108 @@ module.exports = app => {
     
   })
 
+
+  // ------------------------- 添加检查项目----------------
+  router.post('/exam/add',async(req,res)=>{
+    const data = req.body;
+    await ExamModel.create(data,function(err,docs) {
+      if(err) {
+        console.log(err);
+        res.status(422).send('添加失败');
+        return;
+      }else {
+        res.send('添加成功');
+      }
+    })
+  })
+
+  // --------------------------- 获取某诊所的检查项目------------
+  router.post('/exam/list',async(req,res)=>{
+    const hospital_id = req.body.hospital_id;
+    await ExamModel.find({hospital_id},function(err,docs) {
+      if(err) {
+        return console.log(err);
+      }else {
+        res.send(docs);
+      }
+    })
+  })
+
+  // ---------------------------- 修改检查项目 -----------------
+  router.put('/exam/edit/:_id',async(req,res)=>{
+    const _id = req.params._id;
+    const data = req.body;
+    await ExamModel.updateOne({_id},data,function(err,docs) {
+      if(err) {
+        return console.log(err);
+      }else {
+        res.send('修改成功')
+      }
+    })
+  })
+
+  // ----------------------------- 删除检查项目 ------------------
+  router.delete('/exam/delete/:_id',async(req,res)=>{
+    const _id = req.params._id;
+    await ExamModel.deleteOne({_id},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }else {
+        res.send('删除成功');
+      }
+    })
+  })
+
+  // ------------------------- 添加药品----------------
+  router.post('/medic/add',async(req,res)=>{
+    const data = req.body;
+    await MedicModel.create(data,function(err,docs) {
+      if(err) {
+        console.log(err);
+        res.status(422).send('添加失败');
+        return;
+      }else {
+        res.send('添加成功');
+      }
+    })
+  })
+
+  // --------------------------- 获取某诊所的药品------------
+  router.post('/medic/list',async(req,res)=>{
+    const hospital_id = req.body.hospital_id;
+    await MedicModel.find({hospital_id},function(err,docs) {
+      if(err) {
+        return console.log(err);
+      }else {
+        res.send(docs);
+      }
+    })
+  })
+
+  // ---------------------------- 修改药品 -----------------
+  router.put('/medic/edit/:_id',async(req,res)=>{
+    const _id = req.params._id;
+    const data = req.body;
+    await MedicModel.updateOne({_id},data,function(err,docs) {
+      if(err) {
+        return console.log(err);
+      }else {
+        res.send('修改成功')
+      }
+    })
+  })
+
+  // ----------------------------- 删除药品 ------------------
+  router.delete('/medic/delete/:_id',async(req,res)=>{
+    const _id = req.params._id;
+    await MedicModel.deleteOne({_id},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }else {
+        res.send('删除成功');
+      }
+    })
+  })
   app.use('/hospital/api',router);
 
 
