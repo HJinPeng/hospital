@@ -11,15 +11,26 @@ const state = {
   hospitalInfo: {},
   token:'',
 	doctorList: [],
-  weeks_content:[
-    { todos: [{text:"暂无排班" , time_start:"" , time_end:"" , active:false ,findIndex_active : false}] },
-    { todos: [{text:"暂无排班" , time_start:"" , time_end:"" , active:false ,findIndex_active : false}] },
-    { todos: [{text:"暂无排班" , time_start:"" , time_end:"" , active:false ,findIndex_active : false}] },
-    { todos: [{text:"暂无排班" , time_start:"" , time_end:"" , active:false ,findIndex_active : false}] },
-    { todos: [{text:"暂无排班" , time_start:"" , time_end:"" , active:false ,findIndex_active : false}] },
-    { todos: [{text:"暂无排班" , time_start:"" , time_end:"" , active:false ,findIndex_active : false}] },
-    { todos: [{text:"暂无排班" , time_start:"" , time_end:"" , active:false ,findIndex_active : false}] }
-  ]
+  inquiry: {},
+  examList: [],
+  medicList: [],
+  medicChoose: [],
+  caseHistory: {
+    patient_id: '',
+    doctor_id: '',
+    hospital_id: '',
+    talk:'',
+    now: '',
+    physique: '',
+    handle: '',
+    examItem: '', // ‘眼科、口腔科’
+    examPrice: '',
+    medicItem: '', // '维生素C*2(一天两次，一次一颗)，维生素A*4(无)'
+    medicPrice: '',
+    allPrice: '',
+    day: '',
+    time: ''
+  }
 }
 
 const store = new Vuex.Store({

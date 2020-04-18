@@ -91,11 +91,18 @@
 </style>
 <script>
 	import {
-		SET_DOCTOR_LIST	
+		SET_DOCTOR_LIST,
+		SET_EXAM_LIST,
+		SET_MEDIC_LIST	
 	}from '../store/mutations-types'
 	import TopBars from '@/view/NavBar/topBars';
 	import Levelbar from '@/view/NavBar/Levelbar';
   	export default {
+			data(){
+				return {
+					hospital_id: this.$store.state.hospitalInfo._id
+				}
+			},
   		components:{
   			topBars:TopBars,
   			Levelbar,
@@ -103,13 +110,34 @@
 			mounted(){
 				// ------------------ 全局方法，获取医生列表	
 				this.getDoctorList();
+				// ------------------ 全局方法，获取检查项列表
+				this.getExamList();
+				// ------------------- 全局方法，获取药品列表
+				this.getMedicList();
 			},
 			methods:{
+				// 获取医生列表
 				getDoctorList(){
-					this.$request.post('/doctor/list',{hospital_id:this.$store.state.hospitalInfo._id}).then(res=>{
+					this.$request.post('/doctor/list',{hospital_id:this.hospital_id}).then(res=>{
 						console.log(res);
 						//this.doctorList = res.data;
 						this.$store.commit(SET_DOCTOR_LIST,res.data)
+					})
+				},
+				// 获取检查项列表
+				getExamList(){
+					this.$request.post('/exam/list',{hospital_id: this.hospital_id}).then(res=>{
+						console.log(res);
+						// this.tableData = res.data;
+						this.$store.commit(SET_EXAM_LIST,res.data);
+					})
+				},
+				// 获取药品列表
+				getMedicList(){
+					this.$request.post('/medic/list',{hospital_id: this.hospital_id}).then(res=>{
+						console.log(res);
+						// this.tableData = res.data;
+						this.$store.commit(SET_MEDIC_LIST,res.data);
 					})
 				},
 			}

@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import {SET_MEDIC_LIST} from '../../store/mutations-types'
 export default {
   name: 'medicinal',
   data() {
@@ -112,6 +113,7 @@ export default {
       this.$request.post('/medic/list',{hospital_id: this.hospital_id}).then(res=>{
         console.log(res);
         this.tableData = res.data;
+        this.$store.commit(SET_MEDIC_LIST,this.tableData);
       })
     },
     handleMedicInfo(){

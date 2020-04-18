@@ -31,7 +31,7 @@
 					</template>
 					<template scope="scope">
 						<div slot="reference">
-							<span><router-link :to="{path: '/home/Inquiry',query:{orderInfo: JSON.stringify(scope.row)}}" :key="scope.row.order_id"><el-button type="text" :style="scope.row.status == 1 ? 'color:#5daf34':'color: #3a8ee6'"><i class="el-icon-document"></i> {{scope.row.status == 1 ? '复诊':'问诊'}}</el-button></router-link></span>
+							<span><router-link :to="{path: '/home/Inquiry'}"><el-button @click="toInquiry(`${scope.row.order_id}`)" type="text" :style="scope.row.status == 1 ? 'color:#5daf34':'color: #3a8ee6'"><i class="el-icon-document"></i> {{scope.row.status == 1 ? '复诊':'问诊'}}</el-button></router-link></span>
 						<!-- <span><el-button type="text"  @click="handleDelete(scope.$index, scope.row)"><i class="el-icon-close"></i>  取消</el-button></span> -->
 						</div>
 					</template>
@@ -42,10 +42,7 @@
 		
 </template>
 <script>	
-  //  import "../../assets/css/style1.css"
-  //  import {api} from '../../global/api';
-	//npm i element-ui -S 等同于
-	//npm install element-ui --save
+  import {SET_INQUIRY} from '../../store/mutations-types'
 	export default {
 		name: 'visdoctor',
 		props:{
@@ -64,6 +61,20 @@
 				console.log('a',typeof (a.time).substring(0,5));
 				console.log('b',(b.time).substring(0,5));
 				return (a.time).substring(0,5)>(b.time).substring(0,5)?1:-1;
+			},
+			toInquiry(order_id) {
+				// const inquery = JSON.parse(JSON.stringify(data))
+				const list = this.tableData;
+				const length = list.length;
+				for(let i = 0 ; i < length ; i++) {
+					if(list[i].order_id == order_id) {
+						console.log(list[i]);
+						this.$store.commit(SET_INQUIRY,list[i]);
+						break;
+					}
+				}
+				// console.log('data',data);
+				// this.$store.commit(SET_INQUIRY,data);
 			}
 			// flushCom(){
 			// 	this.$router.go(0);

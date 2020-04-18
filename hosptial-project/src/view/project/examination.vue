@@ -60,6 +60,7 @@
 </template>
 
 <script>
+import {SET_EXAM_LIST} from '../../store/mutations-types'
 export default {
   name: 'examination',
   data() {
@@ -96,6 +97,7 @@ export default {
       this.$request.post('/exam/list',{hospital_id: this.hospital_id}).then(res=>{
         console.log(res);
         this.tableData = res.data;
+        this.$store.commit(SET_EXAM_LIST,this.tableData);
       })
     },
     handleExamInfo(){

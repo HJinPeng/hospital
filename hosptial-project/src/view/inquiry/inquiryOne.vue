@@ -6,36 +6,32 @@
     </div>
     <div class="inOne-treatment">
       <h2>就诊时间：<span format='yyyy-MM-dd'>{{this.getDate()}}</span></h2>
-      <h2>就诊医生：<span>王医生</span></h2>
-      <div class="inOne-radio">
+      <h2>就诊医生：<span>{{doctorName}}</span></h2>
+      <!-- <div class="inOne-radio">
         <el-radio class="radio" v-model="radio" label="1">初诊</el-radio>
         <el-radio class="radio" v-model="radio" label="2">复诊</el-radio>
-      </div>
-      <div class="inOne-drug">
-        <h2>药物过敏：</h2>
-        <p>..................................</p>
-      </div>
+      </div> -->
     </div>
 
     <div class="inOne-TabSwitch">
       <div class="inOne-TabLi">
         <ul>
-          <el-tabs class="inOne-TabCon" v-model="activeName" @tab-click="handleClick" type="border-card">
+          <el-tabs class="inOne-TabCon" v-model="activeName" type="border-card">
             <el-tab-pane label="病历" name="first">
               <inRecords></inRecords>
             </el-tab-pane>
-            <el-tab-pane label="医嘱" name="second">
-              <inAdvices></inAdvices>
-            </el-tab-pane>
-            <el-tab-pane label="检验检查" name="third">
+            <el-tab-pane label="检验检查" name="second">
               <inChecks></inChecks>
+            </el-tab-pane>
+            <el-tab-pane label="医嘱" name="third">
+              <inAdvices></inAdvices>
             </el-tab-pane>
             <el-tab-pane label="缴费" name="fourth">
               <inPays></inPays>
             </el-tab-pane>             
-            <el-tab-pane label="随访" name="fifth">
+            <!-- <el-tab-pane label="随访" name="fifth">
               <inVisits></inVisits>
-            </el-tab-pane>
+            </el-tab-pane> -->
           </el-tabs>
         </ul>
       </div>      
@@ -47,11 +43,14 @@
   import Records from './inquiryRecords'
   import Advices from './inquiryAdvices'
   import Pays from './inquiryPays'
-  import Visits from './inquiryVisits'
+  // import Visits from './inquiryVisits'
   import Checks from './inquiryChecks'
   export default {
     data() {
       return {
+        inquiry_doctor: this.$store.state.inquiry.doctor_id,
+        doctorList: this.$store.state.doctorList,
+        doctorName: '',
         radio: '1',
         activeName: 'first'
       }
@@ -61,12 +60,17 @@
       inAdvices:Advices,
       inChecks:Checks,
       inPays:Pays,
-      inVisits:Visits
+      // inVisits:Visits
+    },
+    mounted(){
+      for(let i = 0; i < this.doctorList.length ; i++) {
+        if(this.doctorList[i]._id == this.inquiry_doctor) {
+          this.doctorName = this.doctorList[i].name
+          break;
+        }
+      }
     },
     methods:{
-      handleClick(tab, event) {
-          console.log(tab, event);
-      },
       getDate(){
         var times = (new Date()).toLocaleDateString() + " " + (new Date()).toLocaleTimeString()
         return times
@@ -126,7 +130,7 @@
   }
   .inOne-TabSwitch{
     border-top: 1px solid #dcdcdc;
-    height: 1000px;
+    margin-bottom: 20px;
   }
   .inOne-TabLi{
     /*height: 800px;*/
@@ -134,8 +138,7 @@
   }
   .inOne-TabSwitch ul{
     list-style: none;
-    margin: 0;
-    padding: 10px 0px 0 30px;
+    margin: 10px auto;
     overflow: hidden;
     width: 95%;
     /*float: left;*/
