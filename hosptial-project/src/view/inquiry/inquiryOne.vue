@@ -16,7 +16,7 @@
     <div class="inOne-TabSwitch">
       <div class="inOne-TabLi">
         <ul>
-          <el-tabs class="inOne-TabCon" v-model="activeName" type="border-card">
+          <el-tabs class="inOne-TabCon" v-model="activeName" type="border-card" @tab-click="handleTabClick">
             <el-tab-pane label="病历" name="first">
               <inRecords></inRecords>
             </el-tab-pane>
@@ -26,8 +26,8 @@
             <el-tab-pane label="医嘱" name="third">
               <inAdvices></inAdvices>
             </el-tab-pane>
-            <el-tab-pane label="缴费" name="fourth">
-              <inPays></inPays>
+            <el-tab-pane label="缴费" name="fourth" >
+              <inPays :beClick="activeName"></inPays>
             </el-tab-pane>             
             <!-- <el-tab-pane label="随访" name="fifth">
               <inVisits></inVisits>
@@ -71,6 +71,13 @@
       }
     },
     methods:{
+      handleTabClick(tab, event){
+        // console.log(tab,event);
+        // console.log(tab.paneName);
+        // if(tab.paneName == 'fourth') {
+          
+        // }
+      },
       getDate(){
         var times = (new Date()).toLocaleDateString() + " " + (new Date()).toLocaleTimeString()
         return times

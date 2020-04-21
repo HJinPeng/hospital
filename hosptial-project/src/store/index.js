@@ -15,8 +15,11 @@ const state = {
   examList: [],
   medicList: [],
   medicChoose: [],
+  examChoose: [],
   caseHistory: {
+    order_id: '',
     patient_id: '',
+    arrange_id: '',
     doctor_id: '',
     hospital_id: '',
     talk:'',
@@ -30,7 +33,8 @@ const state = {
     allPrice: '',
     day: '',
     time: ''
-  }
+  },
+  old_order_id: '', // 用来对比订单是否是原来的订单
 }
 
 const store = new Vuex.Store({

@@ -77,7 +77,7 @@
 						<el-input-number :min="1" v-model="addform.days"></el-input-number>
 					</el-form-item>
 					<el-form-item label="数量">
-						<el-input-number :min="1" v-model="addform.numbers"></el-input-number>
+						<el-input-number :min="1" :max="maxNumber" v-model="addform.numbers"></el-input-number>
 					</el-form-item>
 					<el-form-item label="单价(元)">
 						<el-input v-model="addform.price" disabled></el-input>
@@ -108,11 +108,12 @@
 </style>
 
 <script>
+import {SET_MEDIC_CHOOSE,SET_CASE_MEDIC} from '../../store/mutations-types'
 export default {
 	data() {
     	return {
-				medicList: this.$store.state.medicList,
-				tableData: [],
+				medicList: this.$store.state.medicList.filter(item => {return item.status == true}),
+				tableData: this.$store.state.medicChoose,
 				dialogFormVisible: false,
 				values:[{
 					value:'001'
@@ -137,8 +138,9 @@ export default {
 					days: null,
 					numbers: null,
 					price: null,
-					remarks: null
+					remarks: '无'
 				},
+				maxNumber: 0,
 				selectData: [],
 				editActive: false,
 				editIndex: null
@@ -154,6 +156,7 @@ export default {
 					if(this.medicList[i]._id == drugId) {
 						this.addform.drugName = this.medicList[i].name;
 						this.addform.price = this.medicList[i].price;
+						this.maxNumber = this.medicList[i].number;
 						break;
 					}
 				}
@@ -186,7 +189,7 @@ export default {
 					days: null,
 					numbers: null,
 					price: null,
-					remarks: null
+					remarks: '无'
 				}
     	},
     	//弹窗里的确定提交按钮
@@ -197,19 +200,12 @@ export default {
 						message: '请补充完成信息'
 					})
 				}else {
-					this.$confirm('确认提交吗？', '提示', {}).then(() => {
-						this.$message({
-							type: 'success',
-							message: '提交成功'
-						});
-						if(this.editActive) {
-							this.tableData[this.editIndex] = this.addform;
-						}else {
-							this.tableData.push(this.addform);
-						}
-						this.dialogFormVisible = false;
-					}).catch(() => {
-					});	
+					if(this.editActive) {
+						this.tableData[this.editIndex] = this.addform;
+					}else {
+						this.tableData.push(this.addform);
+					}
+					this.dialogFormVisible = false;
 				}
     	},
     	//新增界面里的取消按钮
@@ -223,11 +219,25 @@ export default {
 				this.editIndex = index;
 				this.editActive = true;
 				this.dialogFormVisible = true;
-    	}
-		},
-		save(){
-
+			},
+			save(){
+				this.$message({
+					type: 'success',
+					message: '保存成功'
+				});
+				this.$store.commit(SET_MEDIC_CHOOSE,this.tableData);
+				let medicItem = '';
+				let medicPrice = 0;
+				for(let i = 0 ; i < this.tableData.length ; i++) {
+					medicItem += '组号:'+this.tableData[i].groupIndex+','+this.tableData[i].drugName
+					+'×'+this.tableData[i].numbers+',天数×'+this.tableData[i].days+',备注:'+this.tableData[i].remarks+'; '
+					medicPrice += this.tableData[i].numbers * this.tableData[i].price;
+				}
+				medicPrice = parseFloat(medicPrice.toFixed(2));
+				this.$store.commit(SET_CASE_MEDIC,{medicItem,medicPrice});
+			}
 		}
+		
   	
 }
 </script>

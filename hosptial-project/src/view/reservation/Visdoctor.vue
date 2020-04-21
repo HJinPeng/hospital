@@ -31,7 +31,7 @@
 					</template>
 					<template scope="scope">
 						<div slot="reference">
-							<span><router-link :to="{path: '/home/Inquiry'}"><el-button @click="toInquiry(`${scope.row.order_id}`)" type="text" :style="scope.row.status == 1 ? 'color:#5daf34':'color: #3a8ee6'"><i class="el-icon-document"></i> {{scope.row.status == 1 ? '复诊':'问诊'}}</el-button></router-link></span>
+							<span><router-link :to="{path: '/home/Inquiry'}"><el-button @click="toInquiry(`${scope.row.order_id}`)" type="text" :style="scope.row.status == 1 ? 'color:#5daf34':'color: #3a8ee6'"><i class="el-icon-document"></i> {{scope.row.status == 1 ? '查看':'问诊'}}</el-button></router-link></span>
 						<!-- <span><el-button type="text"  @click="handleDelete(scope.$index, scope.row)"><i class="el-icon-close"></i>  取消</el-button></span> -->
 						</div>
 					</template>

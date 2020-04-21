@@ -11,16 +11,6 @@
               <router-link to="/home/reservation/Mrliu"><span class="color"><i class="fa fa-retweet"></i>切换就诊人 </span></router-link>
             </div>
           </el-col>
-
-          <el-col :span="3" :offset="12">
-            <div class="grid-content bg-purple">
-              <!-- <span><a href=""><i class="fa fa-print" aria-hidden="true"></i>打印预览</a></span> -->
-              <div class="in-btn">
-                <!-- <el-button>保存</el-button> -->
-                <router-link to="/home/Noinquiry"><el-button type="primary">结束就诊</el-button></router-link>
-              </div>
-            </div>
-          </el-col>
         </el-row>
       </div>
 
@@ -126,6 +116,8 @@
 </template>
 
 <script>
+  import moment from 'moment'
+  import {SET_CASE_ID,SET_CASE_INIT,OLD_ORDER_ID} from '../../store/mutations-types'
   import InquiryOne from './inquiryOne';
   import InquiryNone from  './inquiryNone'
   export default {
@@ -140,21 +132,7 @@
           tel:'13012345678',
           remark:'无'
         },
-        infodata:{
-          height:'--',
-          weight:'--',
-          teper:'--',
-          pressure:'--',
-          systolic:'--'
-        },
         dialogEditVisible:false,
-        editinfo:{
-          height:'',
-          weight:'',
-          teper:'',
-          pressure:'',
-          systolic:''
-        },
         diseaseData:[
           {disname:'急性坏疽性阑尾炎伴穿孔',disdate:'2017-04-25',distime:'11:55:50'},
           {disname:'副伤寒',disdate:'2017-04-12',distime:'10:00:00'}
@@ -165,21 +143,31 @@
       inquiryone:InquiryOne,
       InquiryNone
     },
-    activated(){
-      
-    },
     mounted(){
       this.inquiryInfo = this.$store.state.inquiry;
       
+      // this.$store.commit(SET_CASE_INIT);
+      this.setCaseHistory();
+      // this.$store.commit(OLD_ORDER_ID,this.inquiryInfo.order_id);
       console.log('inquery',this.inquiryInfo);
       // console.log('store',this.$store.state.inquiry);
       // this.inquiryInfo = this.$store.state.inquiry
     },
     methods:{
+      setCaseHistory(){
+        let model = {};
+        model.order_id = this.inquiryInfo.order_id;
+        model.patient_id = this.inquiryInfo.patient_id;
+        model.arrange_id = this.inquiryInfo.arrange_id;
+        model.doctor_id = this.inquiryInfo.doctor_id;
+        model.hospital_id = this.$store.state.hospitalInfo._id;
+        model.day = moment(new Date()).format('YYYY-MM-DD');
+        model.time = moment(new Date()).format('HH:mm');
+        this.$store.commit(SET_CASE_ID,model);
+      },
       //编辑界面显示
       handleEdit() {
         this.dialogEditVisible = true;
-        this.infodata = JSON.parse(JSON.stringify(this.editinfo))
       },
       //编辑界面里的确定提交按钮
       editSubmit(){

@@ -2,102 +2,116 @@
 	<div class="inOne-pay">
 		<div>
 			<el-table :data="drugDatas" border style="width: 100%">
-				<el-table-column align="center" label='选择' width="180">
-		      		<template scope="props">
-		        		<el-checkbox v-model="props.row.isactive"></el-checkbox>
-		    		</template>
-		  		</el-table-column>
-				
-				<el-table-column align="center" label='分类' width="300" >
-		      		<template scope="props">
-		        		{{ props.row.id }}
-		    		</template>
-		  		</el-table-column>
-
-		  		<el-table-column align="center" label='价钱(元)'>
-		      		<template scope="props">
-		        		{{ props.row.costSpend }}
-		    		</template>
-		  		</el-table-column>
+				<el-table-column align="center" label='分类' width="80" >
+					<template scope="props">
+						{{ props.row.name }}
+					</template>
+				</el-table-column>
+				<el-table-column align="center" label='项目' show-overflow-tooltip>
+					<template scope="props">
+						{{ props.row.value }}
+					</template>
+				</el-table-column>
+				<el-table-column align="center" label='价钱(元)' width="80">
+					<template scope="props">
+						{{ props.row.price }}
+					</template>
+				</el-table-column>
 			</el-table>
 		</div>
 		<div class="AllTotal">
-			<h2>总价：{{ this.total() }}</h2>
-			<el-button type="primary" @click="selectAll()">全选</el-button>
-			<el-button type="primary" @click="selectNone()">取消全选</el-button>
-			<el-button type="success" @click="payData()" :disabled="this.total() == 0 ">缴费</el-button>
+			<h2>总价：{{ allPrice }}</h2>
+			<el-button type="success" @click="payData()" :disabled="allPrice == 0 ">缴费（结束就诊）</el-button>
 		</div>
 	</div>
 </template>
 
 <script>
+	import {SET_CASE_ALL_PRICE,SET_CASE_INIT} from '../../store/mutations-types'
 	export default {
-		data() {
-		    return {
-		    	drugDatas: [{
-		    		id:'挂号费',
-		    	    name: '1',
-		    	    price: 300,
-					costSpend:32,
-		    	    isactive:false
-		    	},{
-		    		id:'医药费',
-		    	    name: '2',
-		    	    price: 400,
-		    	    costSpend:800,
-		    	    isactive:false
-		    	},{
-		    		id:'材料费',
-		    	    name: '3',
-		    	    price: 250,
-		    	    costSpend:2.1,
-		    	    desc: '荷兰优质淡奶，奶香浓而不腻',
-		    	    isactive:false
-		    	}]
-		    }
+		props:{
+			beClick:{
+				type: String
+			}
 		},
-	  	methods:{
-	  		payData() {
-      			let that = this
-        		// console.log('单个删除选择的row：',index,'-----',row);
-    			that.$confirm('确认缴费吗？', '提示', {}).then(() => {
-    				that.$message({
-	    				type: 'success',
-	    				message: '已缴费了哟'
-    				});
-    				console.log(JSON.stringify(this.total()));
-    			}).catch(() => {
-    				this.$message({
-    			    	type: 'info',
-    			    	message: '已取消缴费'
-    				}); 
-				});	
-    		},
-    		selectAll(){
-    			this.drugDatas.forEach(function(s){
-		        	// console.log(s.isactive)
-		            s.isactive = true;
-		        });
-    		},
-    		selectNone(){
-    			this.drugDatas.forEach(function(s){
-		        	// console.log(s.isactive)
-		            s.isactive = false;
-		        });
-    		},
-		    total: function(){
-		    	var total = 0;
-		    	let that = this;
-		        this.drugDatas.forEach(function(s){
-		        	// console.log(s.isactive)
-		            if (s.isactive){
-		            	total+= s.costSpend;
-		            }
-		        });
-		        return total;
-		    }
+		watch:{
+			beClick(val){
+				if(val == 'fourth') {
+					this.setDrugDatas();
+				}
+			}
+		},
+		data() {
+			return {
+				allPrice: 0,
+				drugDatas: [
+					{
+						name: '检查费',
+						value: '',
+						price: 0
+					},
+					{
+						name: '医药费',
+						value: '',
+						price: 0
+					}
+				]
+			}
+		},
+		mounted(){
+			this.setDrugDatas();
+		},
+		methods:{
+			setDrugDatas(){
+				const examPrice = this.$store.state.caseHistory.examPrice;
+				const examItem = this.$store.state.caseHistory.examItem;
+				const medicPrice = this.$store.state.caseHistory.medicPrice;
+				const medicItem = this.$store.state.caseHistory.medicItem;
+				this.drugDatas = [
+					{
+						name: '检查费',
+						value: examItem,
+						price: examPrice
+					},
+					{
+						name: '医药费',
+						value: medicItem,
+						price: medicPrice
+					}
+				];
+				this.allPrice = parseFloat((parseFloat(examPrice) + parseFloat(medicPrice)).toFixed(2));
+				this.$store.commit(SET_CASE_ALL_PRICE,this.allPrice);
+			},
+			payData() {
+				this.$confirm('确认缴费吗？', '提示', {}).then(() => {
+					const medicChoose = this.$store.state.medicChoose;
+					for(let i = 0 ; i < medicChoose.length ; i++) {
+						let _id = medicChoose[i].drugId;
+						let number = medicChoose[i].numbers;
+						this.$request.put('/medic/editnumber/'+_id,{'number':number}).then(res=>{
+
+							console.log(res);
+						})
+					}
+					const case_history =  this.$store.state.caseHistory;
+					this.$request.post('/history/add',case_history).then(res=>{
+						console.log(res);
+					})
+					this.$message({
+						type: 'success',
+						message: '已缴费'
+					});
+					this.$router.push('/home/reservation/Mrliu');
+					this.$store.commit(SET_CASE_INIT);
+				}).catch(() => {
+					this.$message({
+							type: 'info',
+							message: '已取消缴费'
+					}); 
+			});	
 		}
 	}
+}
 </script>
 
 <style>

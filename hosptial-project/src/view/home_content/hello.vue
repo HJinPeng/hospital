@@ -21,9 +21,9 @@
             </router-link>
           </p>
           <div class="content">
-            <p v-for="item in dataArrange[0].todos" class="todayArrange-content">
+            <!-- <p v-for="item in dataArrange[0].todos" class="todayArrange-content">
               <span v-if="item.text !== '暂无排班'">{{ item.time_start}}~{{ item.time_end}}&nbsp;&nbsp;{{ item.text}}</span>
-            </p>
+            </p> -->
           </div>
 
       </div>
@@ -41,6 +41,97 @@
       </div>
   </div>
 </template>
+
+ <script>
+    import echarts from 'echarts';
+    // import store from '../../store';
+    // import {api} from '../../global/api';
+    export default {
+      data() {
+        return {
+          tableData:[],
+          chart: null,
+          // dataArrange:[
+          //   {
+          //     todos: {time_start:'08.00',time_end:'09.00',text:'111'}
+          //   }
+          // ]
+        }
+      },
+      mounted:function(){
+        // this.$http.get(api.testData).then(function(response){
+        //   console.log("首页的值response",response.data);
+        //   this.tableData=response.data;
+        // });
+
+        this.initChart();
+      },
+
+      // 图表部分
+      // props接收父组件的数据
+      props: {
+        // 设置图表的宽度
+        width: {
+          type: String,
+          default: '500px'
+        },
+        // 设置图表的高度
+        height: {
+          type: String,
+          default: '500px'
+        }
+      },
+      beforeDestroy() {
+        if (!this.chart) {
+          return
+        }
+        this.chart.dispose();
+        this.chart = null;
+      },
+      methods: {
+        initChart() {
+          // 对图表进行初始化
+          this.chart = echarts.init(this.$refs.myEchart);
+          // 把配置和数据放这里
+          this.chart.setOption({
+            color: ['#3398DB'],
+            tooltip: {
+              trigger: 'axis',
+              axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                // 鼠标悬浮在柱上的效果
+                type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+              }
+            },
+            // 图表的位置
+            grid: {
+              left: '3%',
+              right: '4%',
+              bottom: '3%',
+              containLabel: true
+            },
+            xAxis: [{
+              type: 'category',
+              data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+              axisTick: {
+                alignWithLabel: true
+              }
+            }],
+            yAxis: [{
+              type: 'value'
+            }],
+            series: [{
+              type: 'bar',
+              barWidth: '60%',
+              data: [50, 32, 100, 300, 190, 58, 350]
+            }]
+          })
+        }
+      }
+
+
+    }
+  </script>
+
 <style type="text/css" scoped>
     .smallhome .todayReservation{
       margin-left:15px;
@@ -129,93 +220,4 @@
       line-height: 40px;
       background-color: #eef1f6;
     }
-</style>
- <script>
-    import echarts from 'echarts';
-    import store from '../../store';
-    import {api} from '../../global/api';
-    export default {
-      data() {
-        return {
-          tableData:[],
-          chart: null,
-          dataArrange:store.state.weeks_content
-        }
-      },
-      mounted:function(){
-        this.$http.get(api.testData).then(function(response){
-          console.log("首页的值response",response.data);
-          this.tableData=response.data;
-        });
-
-        this.initChart();
-      },
-
-      // 图表部分
-      // props接收父组件的数据
-      props: {
-        // 设置图表的宽度
-        width: {
-          type: String,
-          default: '500px'
-        },
-        // 设置图表的高度
-        height: {
-          type: String,
-          default: '500px'
-        }
-      },
-      beforeDestroy() {
-        if (!this.chart) {
-          return
-        }
-        this.chart.dispose();
-        this.chart = null;
-      },
-      methods: {
-        initChart() {
-          // 对图表进行初始化
-          this.chart = echarts.init(this.$refs.myEchart);
-          // 把配置和数据放这里
-          this.chart.setOption({
-            color: ['#3398DB'],
-            tooltip: {
-              trigger: 'axis',
-              axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                // 鼠标悬浮在柱上的效果
-                type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-              }
-            },
-            // 图表的位置
-            grid: {
-              left: '3%',
-              right: '4%',
-              bottom: '3%',
-              containLabel: true
-            },
-            xAxis: [{
-              type: 'category',
-              data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-              axisTick: {
-                alignWithLabel: true
-              }
-            }],
-            yAxis: [{
-              type: 'value'
-            }],
-            series: [{
-              type: 'bar',
-              barWidth: '60%',
-              data: [50, 32, 100, 300, 190, 58, 350]
-            }]
-          })
-        }
-      }
-
-
-    }
-  </script>
-
-<style scoped>
-
 </style>

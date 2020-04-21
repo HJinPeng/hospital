@@ -37,29 +37,45 @@
 </style>
 
 <script>
+  import {SET_CASE_EXAM,SET_EXAM_CHOOSE} from '../../store/mutations-types'
   export default {
     data() {
       return {
-        selectData: [],
-        tableData: this.$store.state.examList
+        selectData: this.$store.state.examChoose,
+        tableData: this.$store.state.examList.filter(item=>{return item.status == true})
       }
     },
     mounted() {
+      this.initChoose();
     },
     methods: {
+      initChoose(){
+        if (this.selectData) {
+          this.selectData.forEach(row => {
+            this.$refs.multipleTable.toggleRowSelection(row);
+          });
+        } else {
+          this.$refs.multipleTable.clearSelection();
+        }
+      },
       handleSelectionChange(val){
         console.log(val);
         this.selectData = val;
       },
       save(){
-          // console.log('单个删除选择的row：',index,'-----',row);
-        this.$confirm('确认保存吗？', '提示', {}).then(() => {
-          this.$message({
-            type: 'success',
-            message: '保存成功'
-          });
-        }).catch(() => {
-        }); 
+        let examItem = '';
+        let examPrice = 0;
+        for(let i = 0 ; i < this.selectData.length; i++) {
+          examItem += this.selectData[i].name + ' ';
+          examPrice += this.selectData[i].price;
+        }
+        examPrice = parseFloat(examPrice.toFixed(2));
+        this.$store.commit(SET_EXAM_CHOOSE,this.selectData);
+        this.$store.commit(SET_CASE_EXAM,{examItem,examPrice});
+        this.$message({
+          type: 'success',
+          message: '保存成功'
+        });
       }
     },
     

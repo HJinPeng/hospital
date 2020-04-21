@@ -42,20 +42,22 @@
 </template>
 
 <script>
+	import {SET_CASE_RECORD} from '../../store/mutations-types'
 	export default {
 		data() {
 			return {
 				record: {
-					talk: '',
-					now: '',
-					physique: '',
-					handle: ''
+					talk: this.$store.state.caseHistory.talk,
+					now: this.$store.state.caseHistory.now,
+					physique: this.$store.state.caseHistory.physique,
+					handle: this.$store.state.caseHistory.handle
 				},
 			}
 		},
 		methods:{
 			saveData(){
 				this.$confirm('确认保存吗？', '提示', {}).then(() => {
+					this.$store.commit(SET_CASE_RECORD,this.record);
 					this.$message({
 						type: 'success',
 						message: '保存成功'

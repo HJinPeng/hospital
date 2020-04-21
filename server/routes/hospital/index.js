@@ -15,6 +15,8 @@ module.exports = app => {
   const ArrangeModel = require('../../models/hospital/Arrange');
   const ExamModel = require('../../models/hospital/Exam');
   const MedicModel = require('../../models/hospital/Medic');
+  const HistoryModel = require('../../models/hospital/History');
+  const OrderModel = require('../../models/wx/Order');
 
   // -------------------------------------------上传文件接口---------------------
   const upload = multer({dest:__dirname + '/../../uploads'})
@@ -602,6 +604,54 @@ module.exports = app => {
       }
     })
   })
+
+
+  // ---------------------- 添加病历---------------------
+  router.post('/history/add',async(req,res) => {
+    const data = req.body;
+    const order_id = data.order_id;
+    await HistoryModel.create(data,function(err,docs) {
+      if(err) {
+        res.send('error');
+        return console.log(err);
+      }
+      
+      OrderModel.updateOne({'_id':order_id},{'status': 1},function(err,docs){
+        if(err) {
+          res.send('error');
+          return console.log(err);
+        }
+        res.send('add history is ok');
+      })
+    })
+
+  })
+
+  // ---------------------------- 使用了药品，修改药品数量 -----------------
+  router.put('/medic/editnumber/:_id',async(req,res)=>{
+    const _id = req.params._id;
+    const subnumber = req.body.number;
+    console.log('subnumber',subnumber);
+    await MedicModel.findById({_id}, function(err,docs) {
+      if(err) {
+        return console.log(err);
+      }
+      console.log(docs);
+      let number = docs.number;
+      console.log('number',number);
+      let value = number - subnumber;
+      console.log('value',value);
+      MedicModel.updateOne({_id},{'number':value},function(err,docs) {
+        if(err) {
+          return console.log(err);
+        }else {
+          res.send('修改成功')
+        }
+      })
+    })
+    
+  })
+
   app.use('/hospital/api',router);
 
 
