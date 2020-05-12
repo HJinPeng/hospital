@@ -65,10 +65,10 @@ export default new Router({
                    {path:'new_add_work',component: AddWork}
                 ]
             },
-            {path:'members',component: members,name:'会员',
+            {path:'members',component: members,name:'病人',
                 children:[
                   {path:'mem_package',component: mem_package,name:'会员套餐'},
-                  {path:'account',component: account,name:'会员帐号'},
+                  {path:'account',component: account,name:'病人列表'},
                   {path:'integral',component: integral,name:'会员积分'},
                   {path:'style',component: style,name:'会员类型'},
                   {path: '/', redirect: 'account' }//在子路由定向到account

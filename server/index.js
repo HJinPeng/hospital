@@ -8,7 +8,7 @@ app.use(require('cors')())   //中间件，使用跨域模块app.use(express.jso
 app.use(express.json())   //中间件，让await Category.create(req.body); 能用
 
 require('./plugins/db')(app)
-// require('./routes/admin')(app)
+require('./routes/admin')(app)
 require('./routes/hospital')(app)
 require('./routes/web-wx')(app)
 

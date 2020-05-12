@@ -19,9 +19,9 @@
 			        <el-button type="primary" @click="handleLogin">
 			            登录
 			        </el-button>
-			        <el-button type="primary">
+			        <!-- <el-button type="primary">
 			            <router-link to="/register">注册</router-link>
-			        </el-button>
+			        </el-button> -->
 			    </el-form-item>
 			</el-form>
 		</div>

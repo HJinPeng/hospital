@@ -1,32 +1,27 @@
-<!--pages/login/login.wxml-->
+
 <view class="wel-title">
-  登录就医助手
+  修改密码
 </view>
 <van-cell-group>
   <van-field
     value="{{ login_info.phone }}"
-    label="手机账号"
-    placeholder="请输入手机号"
+    label="原始密码"
+    placeholder="请输入原密码"
     error-message="{{ error_phone }}"
     bind:blur="checkPhone"
   />
   <van-field
     value="{{ login_info.password }}"
-    label="密码"
+    label="新密码"
     type="password"
-    placeholder="请输入密码"
+    placeholder="请输入新密码"
     error-message="{{error_password}}"
     bind:blur="checkPassword"
   />
 </van-cell-group>
 
 <view class="login">
-  <van-button type="info" size="large" bindtap="handleLogin">登录</van-button>
-</view>
-
-<view class="other-operate">
-  <navigator></navigator>
-  <navigator url="/pages/register/register">去注册?</navigator>
+  <van-button type="info" size="large" bindtap="handleLogin">修改</van-button>
 </view>
 
 <van-toast id="van-toast" />

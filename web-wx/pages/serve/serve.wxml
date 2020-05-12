@@ -1,7 +1,7 @@
 <!--pages/serve/serve.wxml-->
 <!-- 1. 搜索 -->
 <van-search
-  label="北京"
+  label="诊所"
   value="{{ value }}"
   placeholder="请输入搜索关键词"
   use-action-slot
@@ -18,10 +18,10 @@
 </view>
 
 <!-- 3. 快速寻诊 -->
-<view class="quick">
+<!-- <view class="quick">
   <h-title title="快速寻诊"/>
   <h-quick lists="{{quick}}"/>
-</view>
+</view> -->
 
 <!-- 4. 名医点睛 -->
 <view class="doctor">

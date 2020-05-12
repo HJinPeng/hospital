@@ -4,17 +4,18 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const Main = ()=>import('../views/Main.vue');
+const Login = ()=>import('../views/Login.vue');
 const AdEdit = ()=>import('../views/operate/AdEdit.vue');
 const AdList = ()=>import('../views/operate/AdList.vue');
 
 const routes = [
-  // {
-  //   path: '/login',
-  //   component: Login,
-  //   meta: {
-  //     isPublic: true
-  //   }
-  // },
+  {
+    path: '/login',
+    component: Login,
+    meta: {
+      isPublic: true
+    }
+  },
   {
     path: '/',
     name: 'main',
@@ -30,16 +31,16 @@ const routes = [
 
 const router = new VueRouter({  
   routes,
-  mode: 'history'
+  // mode: 'history'
 });
 
-// // 每次进入路由前
-// router.beforeEach((to,from,next)=>{
-//   console.log(to.meta);
-//   if(!to.meta.isPublic && !localStorage.token){
-//     return next('/login');
-//   }
-//   next();
-// })
+// 每次进入路由前
+router.beforeEach((to,from,next)=>{
+  console.log(to.meta);
+  if(!to.meta.isPublic && !localStorage.token){
+    return next('/login');
+  }
+  next();
+})
 
 export default router

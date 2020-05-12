@@ -17,6 +17,7 @@ module.exports = app => {
   const MedicModel = require('../../models/hospital/Medic');
   const HistoryModel = require('../../models/hospital/History');
   const OrderModel = require('../../models/wx/Order');
+  const Hospital_PatientModel = require('../../models/hospital/Hospital_Patient');
 
   // -------------------------------------------上传文件接口---------------------
   const upload = multer({dest:__dirname + '/../../uploads'})
@@ -652,6 +653,42 @@ module.exports = app => {
     
   })
 
+
+  router.post('/patient/list',async(req,res)=>{
+    const hospital_id = req.body.hospital_id;
+    await Hospital_PatientModel.aggregate([
+      {
+        $match: {
+          'hospital_id': mongoose.Types.ObjectId(hospital_id)
+        }
+      },
+      {
+        $lookup: {
+          from: 'patients',
+          localField: 'patient_id',
+          foreignField: '_id',
+          as: 'patientInfo'
+        }
+      }
+    ],function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send(docs);
+    })
+  })
+
+  router.post('/history',async(req,res)=>{
+    const patient_id = req.body.patient_id;
+    const hospital_id = req.body.hospital_id;
+    await HistoryModel.find({hospital_id,patient_id},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send(docs);
+    })
+
+  })
   app.use('/hospital/api',router);
 
 

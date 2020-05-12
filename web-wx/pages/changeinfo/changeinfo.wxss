@@ -1,0 +1,42 @@
+/* pages/changeinfo/changeinfo.wxss *//* pages/register/register.wxss */
+/* pages/login/login.wxss */
+.wel-title {
+  padding-top: 50rpx;
+  margin-bottom: 30rpx;
+  font-size: 40rpx;
+  text-align: center;
+  font-weight: 700;
+}
+
+
+.register {
+  margin-top: 20px;
+  /* text-align: center; */
+}
+
+.other-operate {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10rpx;
+  margin-bottom: 40rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  text-decoration: underline;
+  color: #666;
+  /* align-items: space-around; */
+}
+
+.register-avatar {
+  display: flex;
+  align-items: center;
+  height: auto;
+  background-color: #fff;
+  padding: var(--cell-vertical-padding,10px) var(--cell-horizontal-padding,16px);
+}
+
+.register-avatar .avatar-text {
+  max-width: 90px;
+  min-width: 90px;
+  font-size: var(--cell-font-size,14px);
+
+}

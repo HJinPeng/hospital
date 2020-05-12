@@ -18,7 +18,7 @@ module.exports = app => {
   const DoctorModel = require('../../models/hospital/Doctor');
   const ArrangeModel = require('../../models/hospital/Arrange');
   const OrderModel = require('../../models/wx/Order');
-
+  const Hospital_PatientModel = require('../../models/hospital/Hospital_Patient');
 
   // -------------------- 轮播图-----------------
   router.get('/home/ad',async(req,res)=>{
@@ -171,24 +171,49 @@ module.exports = app => {
       if(err) {
         return console.log(err);
       }
-      await ArrangeModel.findById({'_id':arrange_id},function(err,docs){
+      await ArrangeModel.findById({'_id':arrange_id},async function(err,docs){
         if(err) {
           return console.log(err);
         }
+        // let doctor_id = docs.doctor_id;
+        let hospital_id = docs.hospital_id;
         const number = docs.number - 1;
-        ArrangeModel.updateOne({'_id':arrange_id},{'number':number},function(err,docs){
+        await ArrangeModel.updateOne({'_id':arrange_id},{'number':number},function(err,docs){
           if(err) {
             return console.log(err);
           }
         })
-  
+        
+        await Hospital_PatientModel.findOne({hospital_id,patient_id},function(err,docs){
+          if(err) {
+            return console.log(err);
+          }
+          console.log('hp',docs);
+          if(docs == null) {
+            Hospital_PatientModel.create({hospital_id,patient_id,times:1},function(err,docs){
+              if(err) {
+                return console.log(err);
+              }
+            })
+          }else {
+            const times = docs.times+1;
+            Hospital_PatientModel.updateOne({hospital_id,patient_id},{times:times},function(err,docs){
+              if(err) {
+                return console.log(err);
+              }
+            })
+          }
+        })
+
+        await OrderModel.create({arrange_id,patient_id},function(err, docs) {
+          if(err) {
+            return console.log(err);
+          }
+          res.send('add order is ok');
+        });
       })
-      await OrderModel.create({arrange_id,patient_id},function(err, docs) {
-        if(err) {
-          return console.log(err);
-        }
-        res.send('add order is ok');
-      });
+
+      
     })
     
   })

@@ -101,6 +101,7 @@ import Visdoctor from './Visdoctor'
 							this.order_list.push(o);
 						}
 					}
+					console.log('orderlist',this.order_list);
 					this.filterOrder();
 				})
 				// 调用过滤条件

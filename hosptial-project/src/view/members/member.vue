@@ -1,7 +1,7 @@
 <template>
   <div class="project" >
-
-  <el-menu theme="dark" :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+    <account/>
+  <!-- <el-menu theme="dark" :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
     <router-link to="/home/members/account">
       <el-menu-item index="1">会员账号</el-menu-item>
     </router-link>
@@ -16,13 +16,16 @@
     </router-link>
   </el-menu>
 
-  <router-view ></router-view> 
+  <router-view ></router-view>  -->
   </div>
 </template>
 <script >
-
+import Account from './account'
 export default {
   name: 'project',
+  components:{
+    Account
+  },
   data () {
     return {
       msg: '项目',

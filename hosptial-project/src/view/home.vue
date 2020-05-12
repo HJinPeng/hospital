@@ -32,7 +32,7 @@
 			</el-menu-item>
 			<el-menu-item index="6">
 				<router-link to="/home/members">
-			    	<i class="fa fa-user-circle icon" aria-hidden="true"></i>会员
+			    	<i class="fa fa-user-circle icon" aria-hidden="true"></i>病人
 			    </router-link>
 			</el-menu-item>
       <el-menu-item index="7">

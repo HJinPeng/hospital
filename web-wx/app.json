@@ -10,7 +10,10 @@
     "pages/hospital/hospital",
     "pages/reserve/reserve",
     "pages/order/order",
-    "pages/history/history"
+    "pages/history/history",
+    "pages/article/article",
+    "pages/changepass/changepass",
+    "pages/changeinfo/changeinfo"
   ],
   "usingComponents": {
     "van-button": "@vant/weapp/button/index"

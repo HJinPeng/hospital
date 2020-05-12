@@ -63,6 +63,8 @@
 				return (a.time).substring(0,5)>(b.time).substring(0,5)?1:-1;
 			},
 			toInquiry(order_id) {
+				console.log(order_id);
+				console.log('Visdoctor',this.tableData);
 				// const inquery = JSON.parse(JSON.stringify(data))
 				const list = this.tableData;
 				const length = list.length;

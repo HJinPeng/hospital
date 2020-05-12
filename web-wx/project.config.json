@@ -133,6 +133,27 @@
 					"id": -1,
 					"name": "注册页面",
 					"pathName": "pages/register/register",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "资讯详情",
+					"pathName": "pages/article/article",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "修改密码",
+					"pathName": "pages/changepass/changepass",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "修改个人信息",
+					"pathName": "pages/changeinfo/changeinfo",
 					"scene": null
 				}
 			]
