@@ -13,6 +13,8 @@ module.exports = app => {
   // -------------------模型 ----------------
   const AdminUserModel = require('../../models/admin/AdminUser');
   const AdvertModel = require('../../models/admin/Advert');
+  const ArticleModel = require('../../models/admin/Article');
+  const HospitalModel = require('../../models/hospital/Hospital');
 
   // -------------初始化管理员账号-----
   router.get('/addadmin',async(req,res)=>{
@@ -100,6 +102,126 @@ module.exports = app => {
     })
   });
 
+  // ----------------------------------- 新建文章----------------------
+  router.post('/article/add',async(req,res)=>{
+    const data = req.body;
+    await ArticleModel.create(data,function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send('add article is ok');
+    })
+  })
+  
+  // ----------------------------------- 文章列表 ---------------------
+  router.get('/article/list',async(req,res)=>{
+    await ArticleModel.find({},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send(docs);
+    })
+  })
+
+  // ------------------------------- 删除某个文章
+  router.delete('/article/del/:id',async(req,res)=>{
+    const id = req.params.id;
+    await ArticleModel.deleteOne({'_id':id},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send('del article is ok');
+    })
+  });
+
+  // ------------------- -----------  获取某个文章
+  router.get('/article/:id',async(req,res)=>{
+    const id = req.params.id;
+    await ArticleModel.findById({'_id':id},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send(docs);
+    })
+  })
+
+  // ------------------------------- 编辑某个文章
+  router.put('/article/edit/:id',async(req,res)=>{
+    const id = req.params.id;
+    const model = req.body;
+    await ArticleModel.updateOne({'_id':id},model,function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send('edit article is ok');
+    })
+  })
+
+
+  // ------------------------------ 添加诊所-------------
+  router.post('/hospital/add',async(req,res)=>{
+    const hospital = req.body.hospital;
+    await HospitalModel.find({hospital},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      console.log('docs,',docs);
+      if(docs.length != 0) {
+        res.status(422).send('诊所已存在');
+      }else{
+        HospitalModel.create(req.body,function(err,docs){
+          if(err) {
+            return console.log(err);
+          }
+          res.send('add hospital is ok');
+        });
+      }
+    })
+  })
+    
+  // ----------------------------------- 诊所列表 ---------------------
+  router.get('/hospital/list',async(req,res)=>{
+    await HospitalModel.find({},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send(docs);
+    })
+  })
+
+  // ------------------------------- 删除某个诊所
+  router.delete('/hospital/del/:id',async(req,res)=>{
+    const id = req.params.id;
+    await HospitalModel.deleteOne({'_id':id},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send('del hospital is ok');
+    })
+  });
+
+  // ------------------- -----------  获取某个诊所
+  router.get('/hospital/:id',async(req,res)=>{
+    const id = req.params.id;
+    await HospitalModel.findById({'_id':id},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send(docs);
+    })
+  })
+
+  // ------------------------------- 编辑某个诊所
+  router.put('/hospital/edit/:id',async(req,res)=>{
+    const id = req.params.id;
+    const model = req.body;
+    await HospitalModel.updateOne({'_id':id},model,function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send('edit hospital is ok');
+    })
+  })
   app.use('/admin/api',router);
 
 }

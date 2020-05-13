@@ -1,7 +1,7 @@
 <template>
   <div class="adlist">
     <h1>广告位列表</h1>
-      <el-table :data="items">
+      <el-table :data="items.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))">
         <el-table-column prop="_id" label="ID" width="230"></el-table-column>
         <el-table-column prop="name" label="名称"></el-table-column>
         <el-table-column label="启用状态" 
@@ -25,6 +25,12 @@
         fixed="right"
         label="操作"
         width="180">
+        <template slot="header" slot-scope="scope">
+          <el-input
+            v-model="search"
+            size="mini"
+            placeholder="输入广告关键字"/>
+        </template>
         <template slot-scope="scope">
           <el-button type="text" size="small" 
           @click="$router.push(`/ads/edit/${scope.row._id}`)">编辑</el-button>
@@ -44,6 +50,7 @@
     name: 'AdList',
     data(){
       return {
+        search: '',
         items: []
       }
     },
