@@ -15,6 +15,7 @@ module.exports = app => {
   const AdvertModel = require('../../models/admin/Advert');
   const ArticleModel = require('../../models/admin/Article');
   const HospitalModel = require('../../models/hospital/Hospital');
+  const PatientModel = require('../../models/wx/Patient');
 
   // -------------初始化管理员账号-----
   router.get('/addadmin',async(req,res)=>{
@@ -220,6 +221,51 @@ module.exports = app => {
         return console.log(err);
       }
       res.send('edit hospital is ok');
+    })
+  })
+
+
+  // ----------------------------------- 病人列表 ---------------------
+  router.get('/patient/list',async(req,res)=>{
+    await PatientModel.find({},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send(docs);
+    })
+  })
+
+  // ------------------------------- 删除某个病人
+  router.delete('/patient/del/:id',async(req,res)=>{
+    const id = req.params.id;
+    await PatientModel.deleteOne({'_id':id},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send('del patient is ok');
+    })
+  });
+
+  // ------------------- -----------  获取某个病人
+  router.get('/patient/:id',async(req,res)=>{
+    const id = req.params.id;
+    await PatientModel.findById({'_id':id},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send(docs);
+    })
+  })
+
+  // ------------------------------- 编辑某个病人
+  router.put('/patient/edit/:id',async(req,res)=>{
+    const id = req.params.id;
+    const model = req.body;
+    await PatientModel.updateOne({'_id':id},model,function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send('edit patient is ok');
     })
   })
   app.use('/admin/api',router);

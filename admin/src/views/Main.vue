@@ -27,7 +27,7 @@
               <template slot="title"><i class="el-icon-message"></i>就医助手</template>
               <el-menu-item-group>
                 <template slot="title">用户</template>
-                <el-menu-item index="/user/list">用户列表</el-menu-item>
+                <el-menu-item index="/patient/list">用户列表</el-menu-item>
               </el-menu-item-group>
           </el-submenu>
         </el-menu>
@@ -35,14 +35,12 @@
     
     <el-container>
         <el-header style="text-align: right; font-size: 12px">
-        <!-- <el-dropdown>
+        <el-dropdown>
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>查看</el-dropdown-item>
-            <el-dropdown-item>新增</el-dropdown-item>
-            <el-dropdown-item>删除</el-dropdown-item>
+              <el-dropdown-item><router-link to="/login" style="text-decoration:none" ><span @click="loginout()">退出</span></router-link></el-dropdown-item>
             </el-dropdown-menu>
-        </el-dropdown> -->
+        </el-dropdown>
         <span>管理员</span>
         </el-header>
         
@@ -64,6 +62,12 @@
       };
       return {
         tableData: Array(20).fill(item)
+      }
+    },
+    methods:{
+      loginout(){
+        console.log('loginout');
+        window.localStorage.removeItem('token');
       }
     }
   };

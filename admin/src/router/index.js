@@ -11,7 +11,9 @@ const ArticleEdit = ()=>import('../views/operate/ArticleEdit.vue');
 const ArticleList = ()=>import('../views/operate/ArticleList.vue');
 const HospitalEdit = ()=>import('../views/hospital/HospitalEdit.vue');
 const HospitalList = ()=>import('../views/hospital/HospitalList.vue');
-const HospitalChangePass = ()=>import('../views/hospital/HospitalChangePass.vue')
+const HospitalChangePass = ()=>import('../views/hospital/HospitalChangePass.vue');
+const PatientList = ()=>import('../views/patient/PatientList.vue');
+const PatientEdit = ()=>import('../views/patient/PatientEdit.vue');
 
 const routes = [
   {
@@ -38,6 +40,10 @@ const routes = [
       { path: '/hospital/edit/:id', name: 'HospitalEdit', props: true, component: HospitalEdit },
       { path: '/hospital/list', name: 'HospitalList', component: HospitalList },
       { path: '/hospital/changepass/:id', name: 'HospitalChangePass', props: true, component: HospitalChangePass },
+
+      { path: '/patient/edit/:id', name: 'PatientEdit', props: true, component: PatientEdit },
+      { path: '/patient/list', name: 'PatientList', component: PatientList },
+      { path: '/patient/changepass/:id', name: 'HospitalChangePass', props: true, component: HospitalChangePass },
     ]
   },
  
