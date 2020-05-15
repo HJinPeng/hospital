@@ -5,3 +5,15 @@ export function getBanner() {
     url: '/home/ad'
   })
 }
+
+export function getArticles() {
+  return request({
+    url: '/article/list'
+  })
+}
+
+export function getOneArticle(id) {
+  return request({
+    url: '/article/'+id
+  })
+}

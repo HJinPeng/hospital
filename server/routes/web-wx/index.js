@@ -12,24 +12,52 @@ module.exports = app => {
   const moment = require('moment');
 
   // -------------------- 引用模型 -----------------
-  const Ad = mongoose.model('Ad');
   const PatientModel = require('../../models/wx/Patient');
   const HospitalModel = require('../../models/hospital/Hospital');
   const DoctorModel = require('../../models/hospital/Doctor');
   const ArrangeModel = require('../../models/hospital/Arrange');
   const OrderModel = require('../../models/wx/Order');
   const Hospital_PatientModel = require('../../models/hospital/Hospital_Patient');
+  const AdvertModel = require('../../models/admin/Advert');
+  const ArticleModel = require('../../models/admin/Article');
 
   // -------------------- 轮播图-----------------
   router.get('/home/ad',async(req,res)=>{
     //const item = await Ad.find().lean();
-    const item = await Ad.find().where({
-      isNow: true
-    }).limit(1).lean();
-    res.send(item);
-    //res.send("222");
+    await AdvertModel.find({'status':true},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send(docs);
+    })
+    
   });
 
+  // -------------------- 文章列表-----------------
+  router.get('/article/list',async(req,res)=>{
+    //const item = await Ad.find().lean();
+    await ArticleModel.find({'status':true},{'body':0},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send(docs);
+    }).sort({'updatedAt': '-1'})
+    
+  });
+
+
+  // -------------------- 某篇文章-----------------
+  router.get('/article/:id',async(req,res)=>{
+    //const item = await Ad.find().lean();
+    const id = req.params.id;
+    await ArticleModel.findById({'_id':id},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send(docs);
+    })
+    
+  });
 
   // -------------------------------------------上传文件接口---------------------
   const upload = multer({dest:__dirname + '/../../uploads'})

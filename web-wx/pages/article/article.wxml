@@ -1,2 +1,8 @@
 <!--pages/article/article.wxml-->
-<rich-text nodes="{{nodes}}"></rich-text>
+<view class="article">
+  <view class="title">{{article.title}}</view>
+  <view class="time">{{article.updatedAt}}</view>
+  <view class="content">
+    <rich-text nodes="{{article.body}}" class="rich"></rich-text>
+  </view>
+</view>

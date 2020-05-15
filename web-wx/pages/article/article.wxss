@@ -1,1 +1,29 @@
 /* pages/article/article.wxss */
+.article {
+  padding: 20rpx;
+  background-color: #fff;
+}
+
+.article .title {
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #1296db;
+}
+
+.article .time {
+  font-size: 24rpx;
+  text-align: right;
+  color: #666;
+}
+
+.article .content {
+  margin-top: 20rpx;
+  border-top: 1px solid #999;
+  padding-top: 20rpx;
+}
+
+.rich_img{
+  max-width:694rpx !important;
+}

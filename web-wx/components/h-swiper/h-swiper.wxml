@@ -4,7 +4,7 @@
   bindtap="onSwiperTap">
   <block wx:for="{{lists}}" wx:key="index">
     <swiper-item class="swiper-item">
-      <image src="{{item.image}}" mode="widthFix" class="image"  data-url="{{item.url}}"/>
+      <image src="{{item.image}}" mode="widthFix" class="image"  data-id="{{item.url}}"/>
     </swiper-item>
   </block>
 </swiper>

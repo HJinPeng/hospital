@@ -12,10 +12,10 @@ Component({
   methods: {
     onSwiperTap: (e) => {
       console.log(e);
-      let url = e.target.dataset.url;
-      console.log(url);
+      // let url = e.target.dataset.url;
+      const id = e.target.dataset.id;
       wx.navigateTo({
-        url: url,
+        url: '/pages/article/article?id='+id
       })
     }
   }

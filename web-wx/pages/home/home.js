@@ -1,19 +1,16 @@
 // pages/home/home.js
 import {
-  getBanner
+  getBanner,
+  getArticles
 } from '../../service/home'
 
 Page({
   data: {
-    banners: [
-      {title:"夏天流行病",image:"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3604584978,874367284&fm=11&gp=0.jpg",link:"https://www.baidu.com"},
-      {title:"如何戴口罩",image:"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3604584978,874367284&fm=11&gp=0.jpg",link:"https://www.baidu.com"},
-      {title:"感冒怎么办",image:"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3604584978,874367284&fm=11&gp=0.jpg",link:"https://www.baidu.com"},
-    ],
+    banners: [],
     entry: [
       {name:"预约挂号",image:"/assets/home/yuyue.png",url:"/pages/serve/serve"},
       {name:"挂号记录",image:"/assets/home/jilu.png",url:"/pages/record/record"},
-      {name:"我的病历",image:"/assets/home/bingli.png"},
+      {name:"我的病历",image:"/assets/home/bingli.png",url:"/pages/record/record"},
       // {name:"我的收藏",image:"/assets/home/shoucang.png"},
     ],
     articles: [
@@ -24,19 +21,33 @@ Page({
   },
   onLoad: function (options) {
     // 1. 获取banner
-    //this._getBanner();
+    this._getBanner();
+    // 2. 获取文章列表
+    this._getArticles();
   },
 
   //---------------------网络请求相关方法----------
   _getBanner() {
     getBanner().then(res => {
-      console.log(res[0]);
+      console.log(res);
       this.setData({
-        banners: res[0].items
+        banners: res.data
       })
     })
   },
 
+  _getArticles(){
+    getArticles().then(res=>{
+      const data = res.data;
+      data.forEach((item)=>{
+        item.updatedAt = item.updatedAt.slice(0,10)+' '+item.updatedAt.slice(11,19)
+      })
+      console.log(res);
+      this.setData({
+        articles: res.data
+      })
+    })
+  },
 
   onReady: function () {
 

@@ -1,12 +1,12 @@
 <!--pages/home/childCpns/h-article/h-article.wxml-->
 <view class="out-h-article">
   <block wx:for="{{lists}}" wx:key="index">
-    <view class="item">
+    <view class="item" bindtap="clickArticle" data-id="{{item._id}}">
       <h-border>
         <view class="content">
           <view class="left">
             <view class="title">{{item.title}}</view>
-            <text class="time">{{item.time}}</text> 
+            <text class="time">{{item.updatedAt}}</text> 
           </view>
           <view class="right">
             <image class="image" src="{{item.image}}" mode="widthFix"/>

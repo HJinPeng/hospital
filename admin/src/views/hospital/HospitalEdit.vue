@@ -221,7 +221,7 @@
       hospitalEdit(){
         const model = {
           hospital: this.ruleForm.hospital,
-          picture: this.ruleForm.pictrue,
+          picture: this.ruleForm.picture,
           intro: this.ruleForm.intro,
           area: this.ruleForm.area,
           address: this.ruleForm.address,
@@ -230,6 +230,7 @@
           administrator: this.ruleForm.administrator,
           email:this.ruleForm.email
         }
+        console.log('model',model);
         hospitalEdit(this.id,model).then(res=>{
             this.$message({
               type:'success',
