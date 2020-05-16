@@ -22,9 +22,9 @@ Page({
     console.log(options);
     const doctor_id = options._id;
     console.log(doctor_id);
-    //const day = moment(new Date()).format('YYYY-MM-DD');
+    const day = moment(new Date()).format('YYYY-MM-DD');
     //console.log(day);
-    const day = '2020-03-10'
+    // const day = '2020-03-10'
     this._getDoctorAndArrange(doctor_id,day);
   },
 

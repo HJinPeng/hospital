@@ -120,6 +120,17 @@ module.exports = app => {
   })
 
 
+  // ------------------------- 获取所有医生------------------
+  router.get('/doctor/list',async(req,res)=>{
+    await DoctorModel.find({},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send(docs); 
+    })
+  })
+
+
   // ------------------------- 获取诊所----------------------
   router.post('/hospital',async(req,res) => {
     

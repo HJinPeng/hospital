@@ -162,7 +162,7 @@
 							type: 'success',
 							message: '新增成功'
 						})
-						this.getDoctorList();
+						// this.getDoctorList();
 					})
 				}else if(this.dialogTitle == '编辑医生'){
 					this.$request.put('/doctor/edit',{doctorInfo:this.doctorInfo,doctorId:this.editDoctorId}).then(res=>{
@@ -170,7 +170,7 @@
 							type: 'success',
 							message: '修改成功'
 						})
-						this.getDoctorList();
+						// this.getDoctorList();
 					})
 				}else {
 					this.$message({
@@ -179,6 +179,7 @@
 					})
 				}
 				this.dialogAddDoctor = false;
+				this.getDoctorList();
 			},
 			
 			// ----------------------------- 删除医生------------------------------
@@ -195,7 +196,7 @@
 			getDoctorList(){
 				this.$request.post('/doctor/list',{hospital_id:this.doctorInfo.hospital_id}).then(res=>{
 					console.log(res);
-					//this.doctorList = res.data;
+					this.doctorList = res.data;
 					this.$store.commit(SET_DOCTOR_LIST,res.data)
 				})
 			},

@@ -30,16 +30,24 @@
   margin-bottom: 6rpx;
 }
 
+.info .top .right .name .hospital {
+  color: #555;
+}
+
 .info .top .right .skill {
   font-size: 28rpx;
 }
 
 .info .bottom {
-  display: flex;
+  /* display: flex; */
   color: #666;
   font-size: 26rpx;
 }
 
+.info .bottom .address {
+  margin-bottom: 20rpx;
+}
+/* 
 .info .bottom .rate,
 .info .bottom .number {
   width: 50%;
@@ -50,4 +58,4 @@
   color: #000;
   font-size: 28rpx;
   padding-left: 10rpx;
-}
+} */

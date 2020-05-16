@@ -199,7 +199,7 @@
 								this.doctor_arrange = { 
 									hospital_id: this.$store.state.hospitalInfo._id,
 									doctor_id: '',
-									day: '',
+									day: this.active_day,
 									start_time: '',
 									end_time: '',
 									money: 0,

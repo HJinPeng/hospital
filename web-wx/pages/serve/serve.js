@@ -1,6 +1,7 @@
 // pages/serve/serve.js
 import {
-  getHospital
+  getHospital,
+  getDoctors
 } from '../../service/serve'
 Page({
   data: {
@@ -16,18 +17,14 @@ Page({
       {name:'发烧',symptom:"症状：发热是指腋下温度达到或超过37.2℃，发热的症状常常与原发疾病有关",tip:"注意：卧床休息,多饮水,吃清淡饮食,保持皮肤的清洁,干燥",image:"https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2624953485,235029434&fm=26&gp=0.jpg"},
       {name:'发烧',symptom:"症状：发热是指腋下温度达到或超过37.2℃，发热的症状常常与原发疾病有关",tip:"注意：卧床休息,多饮水,吃清淡饮食,保持皮肤的清洁,干燥",image:"https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2624953485,235029434&fm=26&gp=0.jpg"},
     ],
-    doctor: [
-      {name:"黄医师",image:"https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=4205320793,403193540&fm=26&gp=0.jpg"},
-      {name:"吴医师",image:"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1587809499721&di=6a9fedf269d2285e003e5c90b210f98c&imgtype=0&src=http%3A%2F%2Fimg.jk51.com%2Fimg_jk51%2F366901823.jpeg"},
-      {name:"陈医师",image:"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1587809513570&di=7a3a07de189fe4c818caa17aa27118c2&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F18%2F04%2F03%2F321aab6ab4a2632143c5b404d7692109.jpg"},
-      {name:"林医师",image:"/assets/home/shoucang.png"},
-      {name:"郑医师",image:"/assets/home/shoucang.png"},
-    ]
+    doctor: []
   },
   // -------------------------- 钩子函数-------------
   onLoad(){
     // 获取所有医院信息
     this._getHospital();
+    // 获取所有医生
+    this._getDoctors();
   },
   
 
@@ -54,6 +51,16 @@ Page({
       }
       this.setData({
         hotHospital: array
+      })
+    })
+  },
+
+  // -----------------------获取所有医生--------------
+  _getDoctors(){
+    getDoctors().then(res=>{
+      console.log('doctorlist',res);
+      this.setData({
+        doctor:res.data
       })
     })
   },

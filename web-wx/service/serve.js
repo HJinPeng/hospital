@@ -6,3 +6,9 @@ export function getHospital() {
     method: 'POST'
   })
 }
+
+export function getDoctors() {
+  return request({
+    url: '/doctor/list'
+  })
+}

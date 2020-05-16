@@ -5,16 +5,24 @@
       <image class="image" src="{{info.image}}" mode="widthFix"/>
     </view>
     <view class="right">
-      <view class="name">{{info.name}}</view>
+      <view class="name">{{info.name}}<text class="hospital"> ( {{hospitalInfo.hospital}} )</text></view>
       <view class="skill">{{info.good}}</view>
     </view>
   </view>
   <view class="bottom">
+    <view class="address">
+      诊所地址： {{hospitalInfo.address}}
+    </view>
+    <view>
+      诊所电话： {{hospitalInfo.phone}}
+    </view>
+  </view>
+  <!-- <view class="bottom">
     <view class="rate">
       评分 <van-rate size="{{14}}" value="4"/>
     </view>
     <view class="number">
       治疗人数 <text class="text">216</text>
     </view>
-  </view>
+  </view> -->
 </view>
