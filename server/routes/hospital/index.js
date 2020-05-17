@@ -678,6 +678,7 @@ module.exports = app => {
     })
   })
 
+  // 病人历史记录
   router.post('/history',async(req,res)=>{
     const patient_id = req.body.patient_id;
     const hospital_id = req.body.hospital_id;

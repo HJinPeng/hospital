@@ -12,3 +12,9 @@ export function getDoctors() {
     url: '/doctor/list'
   })
 }
+
+export function searchHospital(value) {
+  return request({
+    url: '/hospital/search/'+value
+  })
+}

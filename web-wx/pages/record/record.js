@@ -1,6 +1,7 @@
 // pages/record/record.js
 import {
-  getOrderList
+  getOrderList,
+  getHistoryList
 } from '../../service/record'
 
 Page({
@@ -21,15 +22,17 @@ Page({
       // {name: "珠浦第一骨科诊所",content: "订单号：EF1546513",time:"就诊时间：2020-02-02 10:10"}
     ],
     history:[
-      {name: "珠浦第一骨科诊所",content: "症状：发烧、感冒",time:"2020-02-02"},
-      {name: "珠浦第一骨科诊所",content: "症状：发烧、感冒",time:"2020-02-02"},
-      {name: "珠浦第一骨科诊所",content: "症状：发烧、感冒",time:"2020-02-02"}
+      // {name: "珠浦第一骨科诊所",content: "症状：发烧、感冒",time:"2020-02-02"},
+      // {name: "珠浦第一骨科诊所",content: "症状：发烧、感冒",time:"2020-02-02"},
+      // {name: "珠浦第一骨科诊所",content: "症状：发烧、感冒",time:"2020-02-02"}
     ]
   },
 
   onLoad: function (options) {
     // -- 加载订单列表--
     this._getOrderList();
+    // -- 加载病历历史--
+    this._getHistoryList();
   },
 
   //--------------- 加载订单列表-------------
@@ -90,6 +93,27 @@ Page({
     })
   },
 
+  // --------------------获取历史订单--------
+  _getHistoryList(){
+    const patientInfo = wx.getStorageSync('patientInfo');
+    const patient_id = patientInfo._id;
+    getHistoryList(patient_id).then(res=>{
+      console.log(res);
+      const data = res.data;
+      let history = [];
+      for(let i = 0 ; i < data.length; i++) {
+        let o = {};
+        o.name = data[i].hospitalInfo[0].hospital;
+        o.content = '症状：' + data[i].handle;
+        o.time = '就诊时间：'+ data[i].day+' '+data[i].time;
+        o.history_id = data[i]._id;
+        history.push(o);
+      }
+      this.setData({
+        history
+      })
+    })
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -102,7 +126,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this._getOrderList();
   },
 
   /**

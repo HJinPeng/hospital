@@ -1,7 +1,7 @@
 <!--pages/record/childCpns/h-card/h-card.wxml-->
 <view class="out-h-card">
   <block wx:for="{{lists}}"  wx:key="index">
-    <view class="card" bindtap="cardClick" data-arrange_id="{{item.arrange_id}}">
+    <view class="card" bindtap="cardClick" data-arrange_id="{{item.arrange_id}}" data-history_id="{{item.history_id}}">
       <h-border color="{{item.color}}">
         <view class="content">
           <view class="title">

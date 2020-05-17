@@ -1,16 +1,28 @@
 <!--pages/history/history.wxml-->
 <!--pages/order/order.wxml-->
 <view class="histroy">
-  <block wx:for="{{lists}}" wx:key="index">
-    <van-cell-group>
-      <van-field
-        type="textarea"
-        autosize
-        value="{{item.value}}"
-        label="{{item.label}}"
-        disabled
-        border="{{ false }}"
-      />
-    </van-cell-group>
-  </block>
+  <van-cell-group>
+    <van-field type="textarea" autosize label="自诉" value="{{model.talk}}" disabled border="{{ false }}" />
+  </van-cell-group>
+  <van-cell-group>
+    <van-field type="textarea" autosize label="现病史" value="{{model.now}}" disabled border="{{ false }}" />
+  </van-cell-group>
+  <van-cell-group>
+    <van-field type="textarea" autosize label="体格检查" value="{{model.physique}}" disabled border="{{ false }}" />
+  </van-cell-group>
+  <van-cell-group>
+    <van-field type="textarea" autosize label="诊断" value="{{model.handle}}" disabled border="{{ false }}" />
+  </van-cell-group>
+  <van-cell-group>
+    <van-field type="textarea" autosize label="检查项" value="{{model.examItem}}" disabled border="{{ false }}" />
+  </van-cell-group>
+  <van-cell-group>
+    <van-field type="textarea" autosize label="药品说明" value="{{model.medicItem}}" disabled border="{{ false }}" />
+  </van-cell-group>
+  <van-cell-group>
+    <van-field type="textarea" autosize label="费用" value="{{model.allPrice}} 元" disabled border="{{ false }}" />
+  </van-cell-group>
+  <van-cell-group>
+    <van-field type="textarea" autosize label="就诊时间" value="{{model.day}} {{model.time}}" disabled border="{{ false }}" />
+  </van-cell-group>
 </view>

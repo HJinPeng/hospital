@@ -34,9 +34,17 @@ Page({
       const res = result.data;
       console.log(res);
       const {doctor,arrange} = res;
+      let arr = [];
+      const day = moment(new Date()).format('YYYY-MM-DD');
+      const time = moment(new Date()).format('HH:mm');
+      for(let i = 0 ; i < arrange.length; i++) {
+        if(arrange[i].day==day&&arrange[i].end_time>time||arrange[i].day>day) {
+          arr.push(arrange[i]);
+        }
+      }
       this.setData({
         info: doctor,
-        date: arrange
+        date: arr
       })
     })
   },

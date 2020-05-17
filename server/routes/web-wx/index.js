@@ -20,6 +20,7 @@ module.exports = app => {
   const Hospital_PatientModel = require('../../models/hospital/Hospital_Patient');
   const AdvertModel = require('../../models/admin/Advert');
   const ArticleModel = require('../../models/admin/Article');
+  const HistoryModel = require('../../models/hospital/History');
 
   // -------------------- 轮播图-----------------
   router.get('/home/ad',async(req,res)=>{
@@ -344,7 +345,7 @@ module.exports = app => {
           foreignField: '_id',
           as: 'doctorInfo'
         }
-      },
+      }
       // {
       //   $match: {
       //     'arrangeInfo.day': { $gt: day},
@@ -472,6 +473,60 @@ module.exports = app => {
     //   list.past = docs;
     // })
     res.send(list)
+  })
+
+
+  // --------------------------搜索诊所---------------
+  router.get('/hospital/search/:value',async(req,res)=>{
+    const value = req.params.value;
+    console.log(value);
+    const reg_rule = new RegExp(value,"i");
+    await HospitalModel.find({'hospital':reg_rule},function(err,docs) {
+      if(err) {
+        return console.log(err);
+      }
+      res.send(docs);
+    })
+  })
+
+  // ------------------------- 搜索病历史-----------------
+  router.post('/history/list',async(req,res)=>{
+    const patient_id = req.body.patient_id;
+    console.log('patient_id',patient_id);
+    await HistoryModel.aggregate([
+      {
+        $match: {
+          'patient_id': mongoose.Types.ObjectId(patient_id)
+        }
+      },
+      {
+        $lookup: {
+          from: 'hospitals',
+          localField: 'hospital_id',
+          foreignField: '_id',
+          as: 'hospitalInfo'
+        }
+      },
+      {
+        $sort:{"day":-1}
+      }
+      
+    ],function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send(docs);
+    })
+  })
+  
+  router.get('/history/:history_id',async(req,res)=>{
+    const history_id = req.params.history_id;
+    await HistoryModel.findById({'_id':history_id},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send(docs);
+    })
   })
 
   app.use('/wx/api',router);

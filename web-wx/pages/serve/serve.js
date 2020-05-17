@@ -1,7 +1,8 @@
 // pages/serve/serve.js
 import {
   getHospital,
-  getDoctors
+  getDoctors,
+  searchHospital
 } from '../../service/serve'
 Page({
   data: {
@@ -66,13 +67,70 @@ Page({
   },
 
   // ------------------------- 事件监听--------------------
-  onChange(){
-
-  },
-  onSearch(){
-
-  },
   onClick(){
-
+    const value = this.data.value;
+    if(value == '') {
+      this._getHospital();
+    }else {
+      searchHospital(value).then(result=>{
+        const res  = result.data;
+        let array = [];
+        const hospital = res;
+        const length = hospital.length;
+        for(let i = 0 ; i < length ; i++) {
+          let o  = {};
+          o._id = hospital[i]._id;
+          o.address = hospital[i].address;
+          o.administrator = hospital[i].administrator;
+          o.email = hospital[i].email;
+          o.good = hospital[i].good.split('/');
+          o.hospital =  hospital[i].hospital;
+          o.intro = hospital[i].intro;
+          o.phone = hospital[i].phone;
+          o.picture = hospital[i].picture;
+          array.push(o);
+        }
+        this.setData({
+          hotHospital: array
+        })
+      })
+    }
+  },
+  onChange(val){
+    // console.log(val);
+    this.setData({
+      value: val.detail
+    })
+  },
+  onSearch(e){
+    console.log(e.detail);
+    const value = e.detail;
+    if(value == '') {
+      this._getHospital();
+    }else {
+      searchHospital(value).then(result=>{
+        const res  = result.data;
+        let array = [];
+        const hospital = res;
+        const length = hospital.length;
+        for(let i = 0 ; i < length ; i++) {
+          let o  = {};
+          o._id = hospital[i]._id;
+          o.address = hospital[i].address;
+          o.administrator = hospital[i].administrator;
+          o.email = hospital[i].email;
+          o.good = hospital[i].good.split('/');
+          o.hospital =  hospital[i].hospital;
+          o.intro = hospital[i].intro;
+          o.phone = hospital[i].phone;
+          o.picture = hospital[i].picture;
+          array.push(o);
+        }
+        this.setData({
+          hotHospital: array
+        })
+      })
+    }
+    
   }
 })
