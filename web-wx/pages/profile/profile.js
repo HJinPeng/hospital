@@ -17,6 +17,12 @@ Page({
 
   },
 
+  // 点击进入修改个人信息
+  clickInfo(){
+    wx.navigateTo({
+      url: '/pages/changeinfo/changeinfo',
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

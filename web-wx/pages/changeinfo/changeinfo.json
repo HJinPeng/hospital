@@ -5,5 +5,6 @@
     "van-button": "@vant/weapp/button/index",
     "van-toast": "@vant/weapp/toast/index",
     "van-uploader": "@vant/weapp/uploader/index"
-  }
+  },
+  "navigationBarTitleText": "修改资料"
 }

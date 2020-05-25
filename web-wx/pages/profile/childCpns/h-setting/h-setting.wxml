@@ -1,19 +1,20 @@
 <!--pages/profile/childCpns/h-setting/h-setting.wxml-->
 <view class="out-h-setting">
   <van-cell
-    icon="exchange" 
+    icon="setting-o" 
     color="#1296db"
     is-link
     title="修改密码"
     link-type="navigateTo"
-    url="/pages/record/record"
+    url="/pages/changepass/changepass"
   />
   <van-cell
     color="#1296db"
-    icon="flower-o" 
+    icon="exchange" 
     is-link
-    title="意见反馈"
+    title="退出登录"
     link-type="navigateTo"
-    url="/pages/record/record"
+    url="/pages/login/login"
+    bind:click="loginout"
   />
 </view>

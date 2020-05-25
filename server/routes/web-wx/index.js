@@ -96,6 +96,8 @@ module.exports = app => {
       res.status(422).send('用户不存在');
     }
     const isValid = require('bcryptjs').compareSync(password,patient.password);
+    console.log('password',patient.password);
+    console.log('isValid',isValid);
     if(!isValid) {
       res.status(422).send('密码不正确');
     }
@@ -528,6 +530,47 @@ module.exports = app => {
       res.send(docs);
     })
   })
+
+  router.put('/changepass',async(req,res)=>{
+    const patient_id = req.body.patient_id;
+    const password = req.body.password;
+    await PatientModel.updateOne({'_id':patient_id},{password},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send('change password is ok');
+    })
+  })
+
+  router.get('/changepass',async(req,res)=>{
+    await PatientModel.updateOne({'_id':'5e8b19d58509590c1090d60f'},{password:'12345678'},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send('change password is ok');
+    })
+  })
+
+  router.put('/changeinfo',async(req,res)=>{
+    const patient_id = req.body.patient_id;
+    const model = req.body.model;
+    await PatientModel.updateOne({'_id':patient_id},model,function (err,docs) {
+      if(err) {
+        return console.log(err);
+      }
+      res.send('change info is ok');
+    })
+  })
+
+  router.get('/patient/:id',async(req,res)=>{
+    const patient_id = req.params.id;
+    await PatientModel.findById({'_id':patient_id},function (err,docs) {
+      if(err) {
+        return console.log(err);
+      }
+      res.send(docs);
+    })
+  });
 
   app.use('/wx/api',router);
 }

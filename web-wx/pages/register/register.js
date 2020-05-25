@@ -158,7 +158,15 @@ Page({
       Toast('补充完整信息再提交');
     }
   },
-
+  // 删除照片
+  delImage(){
+    const m_image = 'register_info.image';
+    // const image = 'image[0].url';
+    this.setData({
+      [m_image]: '',
+      image: []
+    })
+  },
   // ------------------------ 上传头像----------------
   afterUpload(event){
     const { file } = event.detail;

@@ -127,6 +127,7 @@ Page({
    */
   onShow: function () {
     this._getOrderList();
+    this._getHistoryList();
   },
 
   /**

@@ -4,5 +4,6 @@
     "van-cell-group": "@vant/weapp/cell-group/index",
     "van-button": "@vant/weapp/button/index",
     "van-toast": "@vant/weapp/toast/index"
-  }
+  },
+  "navigationBarTitleText": "修改密码"
 }

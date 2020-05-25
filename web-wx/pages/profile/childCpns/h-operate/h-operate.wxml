@@ -5,15 +5,15 @@
     color="#1296db"
     is-link
     title="我的预约"
-    link-type="navigateTo"
+    link-type="switchTab"
     url="/pages/record/record"
   />
-  <van-cell
+  <!-- <van-cell
     color="#1296db"
     icon="records" 
     is-link
     title="就诊评价"
     link-type="navigateTo"
     url="/pages/record/record"
-  />
+  /> -->
 </view>

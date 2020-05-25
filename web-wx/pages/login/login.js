@@ -28,6 +28,7 @@ Page({
   },
   checkPassword(event){
     const val = event.detail.value;
+    //val.length < 8 || val.length > 18
     if(val.length < 8 || val.length > 18) {
       this.setData({
         error_password: '请输入8-18位的密码'
@@ -46,20 +47,25 @@ Page({
     const model = this.data.login_info;
     if(model.phone.length == 11 && model.password.length >=8 && model.password.length <=18) {
       loginUser(model).then(result => {
-        const res = result.data;
-        console.log(res);
-        wx.setStorage({
-          data: res.patientInfo,
-          key: 'patientInfo',
-        })
-        wx.setStorage({
-          data: res.token,
-          key: 'token',
-        })
-        Toast('登录成功，正在跳转...')
-        wx.switchTab({
-          url: '/pages/home/home',
-        })
+        if(result.statusCode == 200) {
+          const res = result.data;
+          console.log(res);
+          wx.setStorage({
+            data: res.patientInfo,
+            key: 'patientInfo',
+          })
+          wx.setStorage({
+            data: res.token,
+            key: 'token',
+          })
+          Toast('登录成功，正在跳转...')
+          wx.switchTab({
+            url: '/pages/home/home',
+          })
+        }else {
+          Toast('账号密码不正确');
+        }
+        
       })
     }else {
       Toast('请正确填写账号密码');

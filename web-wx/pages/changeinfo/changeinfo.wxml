@@ -2,25 +2,25 @@
 <!--pages/register/register.wxml-->
 <!--pages/login/login.wxml-->
 <view class="wel-title">
-  修改个人信息
+  修改个人资料
 </view>
 <van-cell-group>
   <van-field
-    value="{{ register_info.name }}"
+    value="{{ model.name }}"
     label="姓名"
     placeholder="请输入姓名"
     error-message="{{error_name}}"
     bind:blur="checkName"
   />
   <van-field
-    value="{{ register_info.sex }}"
+    value="{{ model.sex }}"
     label="性别"
     placeholder="男/女"
     error-message="{{error_sex}}"
     bind:blur="checkSex"
   />
   <van-field
-    value="{{ register_info.age }}"
+    value="{{ model.age }}"
     label="年龄"
     placeholder="请输入年龄"
     error-message="{{error_age}}"
@@ -28,7 +28,7 @@
     bind:blur="checkAge"
   />
   <van-field
-    value="{{ register_info.height }}"
+    value="{{ model.height }}"
     label="身高(cm)"
     placeholder="请输入身高"
     error-message="{{error_height}}"
@@ -36,7 +36,7 @@
     bind:blur="checkHeight"
   />
   <van-field
-    value="{{ register_info.weight }}"
+    value="{{ model.weight }}"
     label="体重(kg)"
     placeholder="请输入体重"
     error-message="{{error_weight}}"
@@ -44,7 +44,7 @@
     bind:blur="checkWeight"
   />
   <van-field
-    value="{{ register_info.allergy }}"
+    value="{{ model.allergy }}"
     label="过敏药品"
     placeholder="无/具体过敏药品"
     error-message="{{error_allergy}}"
@@ -52,13 +52,13 @@
   />
   <view class="register-avatar">
     <text class="avatar-text">头像</text>
-    <van-uploader max-count="1" file-list="{{ image }}" bind:after-read="afterUpload" />
+    <van-uploader max-count="1" file-list="{{ image }}" bind:after-read="afterUpload" bind:delete="delImage"/>
   </view>
   
 </van-cell-group>
 
 <view class="register">
-  <van-button type="info" size="large" bindtap="handleRegister">修改</van-button>
+  <van-button type="info" size="large" bindtap="handleChange">修改</van-button>
 </view>
 
 <van-toast id="van-toast" />

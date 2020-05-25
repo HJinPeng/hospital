@@ -1,5 +1,5 @@
 <!--pages/profile/profile.wxml-->
-<view class="info">
+<view class="info" bindtap="clickInfo">
   <view class="left" >
     <image class="image" src="{{patientInfo.image}}" mode="widthFix"/>
   </view>
@@ -16,6 +16,7 @@
 <h-operate out-h-operate="h-operate"/>
 
 <h-setting out-h-setting="h-setting"/>
+
 
 <view class="link">
   <text>联系客服</text>

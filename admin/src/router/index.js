@@ -14,6 +14,7 @@ const HospitalList = ()=>import('../views/hospital/HospitalList.vue');
 const HospitalChangePass = ()=>import('../views/hospital/HospitalChangePass.vue');
 const PatientList = ()=>import('../views/patient/PatientList.vue');
 const PatientEdit = ()=>import('../views/patient/PatientEdit.vue');
+const PatientChangePass = ()=>import('../views/patient/PatientChangePass.vue');
 
 const routes = [
   {
@@ -43,7 +44,7 @@ const routes = [
 
       { path: '/patient/edit/:id', name: 'PatientEdit', props: true, component: PatientEdit },
       { path: '/patient/list', name: 'PatientList', component: PatientList },
-      { path: '/patient/changepass/:id', name: 'HospitalChangePass', props: true, component: HospitalChangePass },
+      { path: '/patient/changepass/:id', name: 'HospitalChangePass', props: true, component: PatientChangePass },
     ]
   },
  
