@@ -175,10 +175,11 @@ export default {
             o.order_id = orderList[j]._id;
             o.patient_id = orderList[j].patient_id;
             o.status = orderList[j].status;
+            const today = moment(new Date()).format('YYYY-MM-DD');
             const now = moment(new Date()).format('HH:mm');
             if(o.status == 1) {
               o.status_value = '已完成'
-            }else if(o.status == 0 && now <= data[i].end_time) {
+            }else if(o.status == 0 && ((today == arrange_day && now <= data[i].end_time) || (today < arrange_day))) {
               o.status_value = '待就诊'
             }else {
               o.status_value = '已过期'

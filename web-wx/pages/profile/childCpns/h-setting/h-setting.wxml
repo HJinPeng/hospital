@@ -13,8 +13,6 @@
     icon="exchange" 
     is-link
     title="退出登录"
-    link-type="navigateTo"
-    url="/pages/login/login"
     bind:click="loginout"
   />
 </view>

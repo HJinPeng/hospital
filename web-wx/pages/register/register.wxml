@@ -15,7 +15,7 @@
   <van-field
     value="{{ register_info.password }}"
     label="密码"
-    placeholder="请输入6-18位密码"
+    placeholder="请输入8-18位密码"
     error-message="{{error_password}}"
     bind:blur="checkPassword"
   />

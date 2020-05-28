@@ -101,7 +101,7 @@
 						type: 'success',
 						message: '已缴费'
 					});
-					this.$router.push('/home/reservation/Mrliu');
+					this.$router.push('/home/hello');
 					this.$store.commit(SET_CASE_INIT);
 				}).catch(() => {
 					this.$message({

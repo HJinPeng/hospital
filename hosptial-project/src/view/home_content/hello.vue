@@ -21,12 +21,16 @@
             </router-link>
           </p>
           <div class="content">
-            <p v-for="item in dataArrange" class="todayArrange-content">
-              {{ item.doctorName}}:<br/>
-              <span v-for="i in item.date" :key="i._id">【{{i.value}}】</span>
-            </p>
+            <div v-if="dataArrange_length == 0">
+              <p style="color: #909399; font-size:14px; text-align:center; padding: 10px 0;">暂无数据</p>
+            </div>
+            <div v-else>
+              <p v-if="" v-for="item in dataArrange" class="todayArrange-content">
+                {{ item.doctorName}}：<br/>
+                <span v-for="i in item.date" :key="i._id">【{{i.value}}】</span>
+              </p>
+            </div>
           </div>
-
       </div>
 
       <!-- <div class="echart">
@@ -63,11 +67,8 @@
           articles:[],
           order_list:[],
           chart: null,
-          dataArrange:[
-            {
-              todos: {time_start:'08.00',time_end:'09.00',text:'111'}
-            }
-          ]
+          dataArrange:[],
+          dataArrange_length: 0
         }
       },
       mounted:function(){
@@ -187,6 +188,7 @@
 					this.$request.post('/arrange/list',{hospital_id,doctor_id,date}).then(res=>{
             console.log(res.data);
             this.dataArrange = res.data[0].data;
+            this.dataArrange_length = res.data[0].data.length;
 					})
 				},
         initChart() {

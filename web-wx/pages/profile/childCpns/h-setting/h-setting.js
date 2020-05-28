@@ -21,6 +21,9 @@ Component({
   methods: {
     loginout(){
       wx.clearStorageSync();
+      wx.reLaunch({
+        url: '/pages/login/login'
+      });
     }
   }
 })
