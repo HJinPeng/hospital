@@ -19,13 +19,13 @@
 						    <el-dropdown-item>
 						    	<router-link to='/home/personal' style="text-decoration:none;color:#666;">个人信息</router-link>
 						    </el-dropdown-item>
-						    <el-dropdown-item>修改密码</el-dropdown-item>
+						    <!-- <el-dropdown-item>修改密码</el-dropdown-item> -->
 					  	</el-dropdown-menu>
 					</el-dropdown>
 				</li>
-				<li>
+				<!-- <li>
 					<i class="fa fa-envelope-o" aria-hidden="true"></i>消息
-				</li>
+				</li> -->
 				<li>
 					<i class="fa fa-question-circle" aria-hidden="true"></i>帮助
 				</li>

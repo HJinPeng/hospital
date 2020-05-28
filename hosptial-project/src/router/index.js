@@ -45,6 +45,8 @@ import LiuContent from '@/view/reservation/liuContent'
 // 添加医生模块
 import Doctor from '@/view/doctor/index.vue'
 
+// 文章详情
+import Article from '@/view/article/article'
 
 Vue.use(Router)
 Vue.use(Resource)
@@ -52,8 +54,9 @@ Vue.use(Validator)
 
 export default new Router({
   routes: [
-    {path:'/',component: Login},
+    { path:'/',component: Login},
     { path: '/register',component: Register},
+    { path: '/article/:id',component: Article,props:true},
     { path: '/home',component: Home,name:'',
         children:[
             {path:'personal',component: Personal ,name:'个人信息'},

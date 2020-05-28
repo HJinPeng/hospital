@@ -56,7 +56,7 @@
             placeholder="输入姓名关键字"/>
         </template>
         <template scope="scope">
-          <el-button size="small" type="primary"> 查看</el-button>
+          <!-- <el-button size="small" type="primary"> 查看</el-button> -->
         </template>
       </el-table-column>
     </el-table>

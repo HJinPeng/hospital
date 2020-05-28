@@ -18,6 +18,8 @@ module.exports = app => {
   const HistoryModel = require('../../models/hospital/History');
   const OrderModel = require('../../models/wx/Order');
   const Hospital_PatientModel = require('../../models/hospital/Hospital_Patient');
+  const PatientModel = require('../../models/wx/Patient');
+  const ArticleModel = require('../../models/admin/Article');
 
   // -------------------------------------------上传文件接口---------------------
   const upload = multer({dest:__dirname + '/../../uploads'})
@@ -687,9 +689,49 @@ module.exports = app => {
         return console.log(err);
       }
       res.send(docs);
-    })
+    }).sort({_id: -1});
 
   })
+
+  // 修改病人参考信息
+  router.put('/patient/edit/:id',async(req,res)=>{
+    const patient_id = req.params.id;
+    const model = req.body;
+    await PatientModel.updateOne({'_id':patient_id},model,function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send('edit patient is ok');
+    })
+  })
+
+  // -------------------- 文章列表-----------------
+  router.get('/article/list',async(req,res)=>{
+    //const item = await Ad.find().lean();
+    await ArticleModel.find({'status':true},{'body':0},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send(docs);
+    }).sort({'updatedAt': '-1'})
+    
+  });
+
+
+  // -------------------- 某篇文章-----------------
+  router.get('/article/:id',async(req,res)=>{
+    //const item = await Ad.find().lean();
+    const id = req.params.id;
+    await ArticleModel.findById({'_id':id},function(err,docs){
+      if(err) {
+        return console.log(err);
+      }
+      res.send(docs);
+    })
+    
+  });
+  
+
   app.use('/hospital/api',router);
 
 

@@ -2,13 +2,13 @@
   <div class="smallhome">
       <div class="todayReservation">
           <!-- <p>今日预约</p> -->
-          <el-table :data="tableData" style="width: 100%" stripe>
-              <el-table-column prop="date" label="今日预约"> </el-table-column>
+          <el-table :data="order_list" style="width: 100%" stripe>
+              <el-table-column prop="time" label="今日预约"> </el-table-column>
               <el-table-column prop="name" label="姓名" ></el-table-column>
               <el-table-column prop="phone" label="电话"></el-table-column>
               <el-table-column label="操作">
                   <template scope="scope">
-                     <router-link to="/home/reservation/Vdetails">查看</router-link>
+                     <router-link to="/home/reservation/Mrliu">查看</router-link>
                   </template>
               </el-table-column>
           </el-table>
@@ -21,41 +21,53 @@
             </router-link>
           </p>
           <div class="content">
-            <!-- <p v-for="item in dataArrange[0].todos" class="todayArrange-content">
-              <span v-if="item.text !== '暂无排班'">{{ item.time_start}}~{{ item.time_end}}&nbsp;&nbsp;{{ item.text}}</span>
-            </p> -->
+            <p v-for="item in dataArrange" class="todayArrange-content">
+              {{ item.doctorName}}:<br/>
+              <span v-for="i in item.date" :key="i._id">【{{i.value}}】</span>
+            </p>
           </div>
 
       </div>
 
-      <div class="echart">
+      <!-- <div class="echart">
           <p>上周看病人数统计</p>
           <div :style="{height:height,width:width}" ref="myEchart">
           </div>
-      </div>
+      </div> -->
       <div class="news">
         <p>
           <span class="new">最新动态</span>
-          <span class="more">更多</span>
+          <!-- <span class="more">更多</span> -->
         </p>
+        <div class="content">
+            <div class="article" v-for="item in articles" :key="item._id">
+              <router-link tag="a" :to="`/article/${item._id}`" target="_blank">
+                {{item.title}}<br/>
+                <div style="text-align:right; font-size:8px;">【{{item.updatedAt}}】</div>
+              </router-link>
+            </div>
+          
+        </div>
       </div>
   </div>
 </template>
 
  <script>
+    import moment from 'moment';
     import echarts from 'echarts';
     // import store from '../../store';
     // import {api} from '../../global/api';
     export default {
       data() {
         return {
-          tableData:[],
+          articles:[],
+          order_list:[],
           chart: null,
-          // dataArrange:[
-          //   {
-          //     todos: {time_start:'08.00',time_end:'09.00',text:'111'}
-          //   }
-          // ]
+          dataArrange:[
+            {
+              todos: {time_start:'08.00',time_end:'09.00',text:'111'}
+            }
+          ]
         }
       },
       mounted:function(){
@@ -64,7 +76,10 @@
         //   this.tableData=response.data;
         // });
 
-        this.initChart();
+        //this.initChart();
+        this.getArrange();
+        this.getOrderList();
+        this.getArticles();
       },
 
       // 图表部分
@@ -89,6 +104,91 @@
         this.chart = null;
       },
       methods: {
+        // 获取文章
+        getArticles(){
+          this.$request.get('/article/list').then(res=>{
+            console.log(res);
+            const data = res.data;
+            data.forEach((item)=>{
+              item.updatedAt = item.updatedAt.slice(0,10)+' '+item.updatedAt.slice(11,19)
+            })
+            this.articles = data;
+          })
+        },
+
+        // 今日预约
+        getOrderList(){
+          this.order_list = [];
+          const hospital_id = this.$store.state.hospitalInfo._id;
+          const doctor_id = 'all'
+          const day = moment(new Date()).format('YYYY-MM-DD');
+          this.$request.post('/order/list',{hospital_id,doctor_id,day}).then(res=>{
+            // console.log(res);
+            const data = res.data;
+            for(let i = 0 ; i < data.length; i++) {
+              let arrange_id = data[i]._id;
+              let arrange_day = data[i].day;
+              let doctor_id = data[i].doctor_id;
+              let time = data[i].start_time + '~' + data[i].end_time;
+              let orderList =  data[i].orderList;
+              let patientInfo =  data[i].patientInfo;
+              for(let j = 0 ; j < orderList.length ; j++) {
+                let o = {};
+                o.arrange_id = arrange_id;
+                o.arrange_day = arrange_day;
+                o.doctor_id = doctor_id;
+                o.time = time;
+                o.order_id = orderList[j]._id;
+                o.patient_id = orderList[j].patient_id;
+                o.status = orderList[j].status;
+                const now = moment(new Date()).format('HH:mm');
+                if(o.status == 1) {
+                  o.status_value = '已完成'
+                }else if(o.status == 0 && now <= data[i].end_time) {
+                  o.status_value = '待就诊'
+                }else {
+                  o.status_value = '已过期'
+                }
+                
+                o.buy_time = orderList[j].time;
+                o.name = patientInfo[j].name;
+                o.phone = patientInfo[j].phone;
+                o.age = patientInfo[j].age;
+                o.allergy = patientInfo[j].allergy;
+                o.heart = patientInfo[j].heart;
+                o.height = patientInfo[j].height;
+                o.image = patientInfo[j].image;
+                o.pressure = patientInfo[j].pressure;
+                o.sex = patientInfo[j].sex;
+                o.temperature = patientInfo[j].temperature;
+                o.weight = patientInfo[j].weight;
+                o.test_time = patientInfo[j].time;
+                this.order_list.push(o);
+              }
+            }
+            this.$message({
+              type: 'success',
+              message: '查询成功'
+            })
+            console.log('orderlist',this.order_list);
+            // this.filterOrder();
+          })
+          // 调用过滤条件
+          //this.show_order_list = [];
+          
+        },
+        // ---------------------------------获取医生排班列表-------------
+				getArrange(){
+					const hospital_id = this.$store.state.hospitalInfo._id;
+					const doctor_id = 'all';
+	 				const day = new Date();
+					//console.log(this.$moment(this.date).format('YYYY-MM-'));
+					const date = this.$moment(day).format('YYYY-MM-DD')
+					this.$request.post('/arrange/list',{hospital_id,doctor_id,date}).then(res=>{
+            console.log(res.data);
+            this.dataArrange = res.data[0].data;
+					})
+				},
         initChart() {
           // 对图表进行初始化
           this.chart = echarts.init(this.$refs.myEchart);
@@ -138,6 +238,7 @@
       /*text-align: center;*/
       float: left;
       width: 50%;
+      height: 400px;
     }
     .smallhome .todayReservation p{
       font-size: 18px;
@@ -153,6 +254,7 @@
     .smallhome .todayArrange{
       margin-left: 15px;
       border: 1px solid #dfe6ec;
+      border-bottom: none;
       float: left;
       width: 30%;
       background: #fff;
@@ -177,7 +279,7 @@
       float: right;
     }
     .smallhome .todayArrange .content{
-      height: 117px;
+      height: auto;
     }
     .smallhome .todayArrange .todayArrange-content{
       line-height: 30px;
@@ -211,13 +313,29 @@
       float: left;
       margin-left: 15px;
       margin-top: 15px;
+      margin-bottom: 20px;
       background: #fff;
       width: 30%;
-      height: 540px;
+      min-height: 200px;
       border: 1px solid #dfe6ec;
+      border-bottom: none;
     }
     .smallhome .news p{
       line-height: 40px;
       background-color: #eef1f6;
     }
+    .smallhome .news .more {
+      cursor: pointer;
+    }
+    .smallhome .news .content .article {
+      border-bottom: 1px solid #dfe6ec;
+      font-size: 13px;
+      padding: 8px 20px;
+    }
+
+    .smallhome .news .content .article a{
+      color: #000;
+      text-decoration: none;
+    }
+
 </style>

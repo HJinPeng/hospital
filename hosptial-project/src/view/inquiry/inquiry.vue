@@ -89,8 +89,8 @@
                   <h2>过往病史</h2>
                 </div>
                 <div class="in-disease" v-for="item in diseaseData">
-                  <p class="in-disTitle">{{ item.disname }}</p>
-                  <h2 class="in-disDate">{{ item.disdate}}&nbsp;&nbsp;{{ item.distime }}</h2>
+                  <p class="in-disTitle">{{ item.handle }}</p>
+                  <h2 class="in-disDate">{{ item.day}}&nbsp;&nbsp;{{ item.time }}</h2>
                   <!-- <div class="in-disBtn">
                     <span><a href=""><i class="fa fa-file-text-o" aria-hidden="true"></i>详情</a></span>
                     <span><a href=""><i class="fa fa-clone" aria-hidden="true"></i>复制病历</a></span>
@@ -134,8 +134,8 @@
         },
         dialogEditVisible:false,
         diseaseData:[
-          {disname:'急性坏疽性阑尾炎伴穿孔',disdate:'2017-04-25',distime:'11:55:50'},
-          {disname:'副伤寒',disdate:'2017-04-12',distime:'10:00:00'}
+          // {disname:'急性坏疽性阑尾炎伴穿孔',disdate:'2017-04-25',distime:'11:55:50'},
+          // {disname:'副伤寒',disdate:'2017-04-12',distime:'10:00:00'}
         ]
       }
     },
@@ -152,8 +152,24 @@
       console.log('inquery',this.inquiryInfo);
       // console.log('store',this.$store.state.inquiry);
       // this.inquiryInfo = this.$store.state.inquiry
+
+      // 获取病历史
+      this.getHistory();
     },
     methods:{
+      // 获取病人过往病史：在该诊所的就诊历史
+      getHistory(){
+        const hospital_id = this.$store.state.hospitalInfo._id;
+        this.$request.post('/history',{patient_id:this.inquiryInfo.patient_id,hospital_id}).then(res=>{
+          console.log(res);
+          const data = res.data;
+          let history = [];
+          for(let i = 0 ; i < data.length ; i++) {
+            history.push(data[i]);
+          }
+          this.diseaseData = history;
+        })
+      },
       setCaseHistory(){
         let model = {};
         model.order_id = this.inquiryInfo.order_id;
@@ -168,16 +184,26 @@
       //编辑界面显示
       handleEdit() {
         this.dialogEditVisible = true;
+
       },
       //编辑界面里的确定提交按钮
       editSubmit(){
         this.$confirm('确认提交吗？', '提示', {}).then(() => {
-          this.$message({
-            type: 'success',
-            message: '修改成功'
-          });
+          let model = {};
+          model.height = this.inquiryInfo.height;
+          model.weight = this.inquiryInfo.weight;
+          model.temperature = this.inquiryInfo.temperature;
+          model.pressure = this.inquiryInfo.pressure;
+          model.allergy = this.inquiryInfo.allergy;
+          this.$request.put('/patient/edit/'+this.inquiryInfo.patient_id,model).then(res=>{
+            console.log(res);
+            this.$message({
+              type: 'success',
+              message: '修改成功'
+            });
+            this.dialogEditVisible = false;
+          })
           
-          this.dialogEditVisible = false;
         }).catch(() => {
       
         });
